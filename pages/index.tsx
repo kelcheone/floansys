@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center ">
       <Head>
-        <title>Create Next App</title>
+        <title>Profile| LMS</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <UserProfile/>
