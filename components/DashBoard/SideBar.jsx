@@ -1,15 +1,14 @@
-// This is a sidebar component that holds the navigation links in button to different pages
-// the component is styled with tailwindcss
 import { RiDashboardFill } from "react-icons/ri";
 import { GoVerified } from "react-icons/go";
 import { FaUsers } from "react-icons/fa";
 import { HiDocumentText } from "react-icons/hi";
+import { IoMdSettings } from "react-icons/io";
 
 import Button from "./Button";
 
 const SideBar = () => {
   return (
-    <div className=" md:py-16 py-16 md:flex-col  flex-row items-center justify-center">
+    <div className=" md:py-16 py-16   md:flex-row items-center justify-center">
       <div className="flex flex-col  items-center justify-center bg-black rounded-lg md:m-10 md:p-8 p-4">
         <Button>
           <div className="flex items-center justify-between bg-red font-bold">

@@ -6,8 +6,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "chart.js": "^4.0.1",
+    "d3": "^7.6.1",
     "next": "latest",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.0.1",
     "react-dom": "18.2.0",
     "react-icons": "^4.6.0"
   },
