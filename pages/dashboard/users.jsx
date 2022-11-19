@@ -6,7 +6,13 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import SideBar from "../../components/DashBoard/SideBar";
 import Card from "../../components/Users/Card";
 
-const user = () => {
+// UID
+// Name
+// Borrowed
+// Paid
+// Status
+
+const users = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
@@ -36,4 +42,4 @@ const user = () => {
     </div>
   );
 };
-export default user;
+export default users;
