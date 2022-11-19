@@ -1,23 +1,26 @@
 import React from "react";
-
-/**
- * 
-title="Total Users"
-number="1,234"
-color="bg-blue-500"
-icon="bx bx-user"
- */
+import Dropdown from "./Dropdown";
 
 // creates a slighly different card from the SmallCard component
-const MidCard = ({ title, number, color, icon }) => {
+// The card is made up of a header  and besides it a dropdown
+// bellow is the historical number of users and besides it is the amount transacted by the users
+
+const MidCard = () => {
   return (
-    <div className="flex flex-col items-center justify-center bg-green-400 rounded-lg shadow-lg p-4">
-      <div className="flex items-center justify-center rounded-full bg-[#f3f4f6] p-3">
-        <i className={`${icon} text-2xl text-blue-500`}></i>
+    <div className="flex flex-col items-center justify-center bg-white rounded-lg shadow-lg p-4 mb-8 w-full">
+      <div className="flex items-center justify-between w-full">
+        <h1 className="text-xl font-semibold">Historical Users</h1>
+        <Dropdown />
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="text-xl font-semibold">{title}</h1>
-        <h1 className="text-3xl font-semibold">{number}</h1>
+      <div className="w-full mt-4 flex justify-evenly">
+        <div>
+          <h1 className="text-xl font-semibold">4</h1>
+          <p>Total number of users</p>
+        </div>
+        <div>
+          <h1 className="text-xl font-semibold">1,234</h1>
+          <p>Total amount transacted</p>
+        </div>
       </div>
     </div>
   );

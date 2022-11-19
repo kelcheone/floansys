@@ -1,6 +1,4 @@
 import React from "react";
-// A button that takes in an icon and a text and returns a button with the icon and text
-// Styled with tailwindcss
 
 const Button = ({ children }) => {
   return (
