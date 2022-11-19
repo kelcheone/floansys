@@ -1,15 +1,14 @@
-// Style with tailwindcss
 import React, { useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import MidCard from "../components/DashBoard/MidCard";
+import MidCard from "../../components/DashBoard/MidCard";
 
-import SideBar from "../components/DashBoard/SideBar";
-import SummaryCard from "../components/DashBoard/SummaryCard";
-import SmCardRender from "../components/DashBoard/SmCardRender";
-import Applications from "../components/DashBoard/Applications";
-import Verified from "../components/DashBoard/Verified";
-import Users from "../components/DashBoard/Users";
+import SideBar from "../../components/DashBoard/SideBar";
+import SummaryCard from "../../components/DashBoard/SummaryCard";
+import SmCardRender from "../../components/DashBoard/SmCardRender";
+import Applications from "../../components/DashBoard/Applications";
+import Verified from "../../components/DashBoard/Verified";
+import Users from "../../components/DashBoard/Users";
 
 const dashboard = () => {
   const [showSidebar, setShowSidebar] = useState(false);
