@@ -1,3 +1,6 @@
+
+
+
 let users = [
   {
     UID: 234,
@@ -44,7 +47,7 @@ const Card = () => {
               <tr className="border-b-2 border-gray-300 text-center">
                 <td className="p-2">{user.UID}</td>
                 <td className="p-2">{user.name}</td>
-                <td className="p-2">{user.profileStatus}</td>
+                <td className="p-2">{user.profileStatus} complete.</td>
                 <td className="p-2">
                   <button className="flex items-center justify-center w-32 h-10 bg-blue-500 rounded-lg text-white">
                     Verify

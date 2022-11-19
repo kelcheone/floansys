@@ -6,7 +6,7 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import SideBar from "../../components/DashBoard/SideBar";
 import Card from "../../components/Applications/Card";
 
-const verify = () => {
+const applications = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
@@ -36,4 +36,4 @@ const verify = () => {
     </div>
   );
 };
-export default verify;
+export default applications;
