@@ -18,13 +18,13 @@ const AddFile = ({ setFile }) => {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center w-full h-full m-3">
       <div
         {...getRootProps()}
-        className="flex flex-col items-center justify-center w-full h-full bg-[#ACBFB7] rounded-lg shadow-lg"
+        className="flex flex-col items-center justify-center w-full h-full bg-[#25d58c] rounded-lg shadow-lg"
       >
         <input {...getInputProps()} />
-        <div className="flex items-center justify-center w-full h-full">
+        <div className="flex items-center justify-center w-full h-full p-5">
           {file ? (
             <div className="flex flex-col items-center justify-center w-full h-full">
               <h1 className="text-xl font-semibold mb-4">{file.name}</h1>
@@ -38,7 +38,8 @@ const AddFile = ({ setFile }) => {
             </div>
           ) : (
             <h1 className="text-xl font-semibold">
-              Drag and drop files here or click to select files
+              Drag and drop files here <br /> or <br />
+              click to select files
             </h1>
           )}
         </div>
