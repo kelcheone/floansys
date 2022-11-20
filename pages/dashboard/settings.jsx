@@ -1,11 +1,17 @@
+// Style with tailwindcss
 import React, { useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 import SideBar from "../../components/DashBoard/SideBar";
-import Card from "../../components/Applications/Card";
+import SettingsCard from "../../components/DashBoard/SettingsCard";
+import { useRouter } from "next/router";
+// const router = useRouter();
+// const { id } = router.query;
 
-const verify = () => {
+// console.log({ id });
+
+const settings = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
@@ -27,12 +33,12 @@ const verify = () => {
       >
         <SideBar />
       </div>
-      <div className="md:w-3/4 w-full h-full bg-background">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center md:space-x-4 md:space-y-0 space-y-4 p-4">
-          <Card id="1" name="John Doe" email="jhon@df.io" role="Admin" />
+      <div className="md:w-3/4 w-full h-full bg-background flex justify-center">
+        <div className="flex flex-col md:flex-row md:justify-center md:items-center md:space-x-4 md:space-y-0 space-y-4 p-4 mt-32">
+          <SettingsCard />
         </div>
       </div>
     </div>
   );
 };
-export default verify;
+export default settings;
