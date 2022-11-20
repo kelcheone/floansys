@@ -1,6 +1,3 @@
-// A modal to change the admin password
-// styled with tailwindcss
-
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -73,6 +70,5 @@ const ChangePasswordModal = ({ show, setShow }) => {
     </div>
   );
 };
-
 
 export default ChangePasswordModal;

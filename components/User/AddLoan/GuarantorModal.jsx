@@ -1,16 +1,3 @@
-// A modal  form to add a guarantor
-// styled with tailwindcss
-// form has:
-// 1. first name
-// 2. last name
-// 3. phone number
-// 4. email
-// 5. national id
-// 6. checkbox to confirm that the guarantor is a user
-// 7. a button to submit the form
-
-// Has a modal to drag and drop files
-
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import AddFile from "./AddFile";

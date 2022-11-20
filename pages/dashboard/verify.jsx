@@ -1,4 +1,3 @@
-// Style with tailwindcss
 import React, { useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";

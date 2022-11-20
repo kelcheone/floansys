@@ -1,7 +1,3 @@
-// A card that allow to drag and drop files
-// or select files from the file explorer
-// styled with tailwindcss
-
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineClose } from "react-icons/ai";

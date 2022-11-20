@@ -1,9 +1,3 @@
-// A card that displays the settings for a dashboard
-// The settings are:
-// change admin password
-// notification settings
-// theme settings
-// styled with tailwindcss
 import { useState } from "react";
 import { AiOutlineRight } from "react-icons/ai";
 import ChangePasswordModal from "./ChangePasswordModal";
