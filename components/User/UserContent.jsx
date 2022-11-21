@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "./Button";
 import UserCard from "./UserCard";
 
@@ -10,6 +11,19 @@ let user_loan_history = {
 };
 
 const UserContent = () => {
+  const handleClick = () => {
+    // link to add loan page
+    console.log("clicked");
+    return (
+      <Link
+        href={{
+          pathname: "/user/addloan",
+        }}
+      >
+        <a>Add Loan</a>
+      </Link>
+    );
+  };
   return (
     <div className="flex flex-col items-center justify-center md:h-screen bg-background p-5">
       <div className="flex flex-col items-center justify-center w-full h-1/3">
@@ -47,7 +61,15 @@ const UserContent = () => {
             </table>
           </div>
           <div className="flex items-center justify-center w-full h-2/3">
-            <Button label="Add New Loan" />
+            <button className="px-4 py-2 text-sm font-bold text-white bg-black rounded hover:bg-gray-700">
+              <Link
+                href={{
+                  pathname: "/user/addloan",
+                }}
+              >
+                Add New Loan
+              </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -61,7 +83,15 @@ const UserContent = () => {
       </div>
 
       <div className="flex items-center justify-center w-full h-1/3">
-        <Button label="More Statements" />
+        <button className="px-4 py-2 text-sm font-bold text-white bg-black rounded hover:bg-gray-700">
+          <Link
+            href={{
+              pathname: "/user/statement",
+            }}
+          >
+            More Statements
+          </Link>
+        </button>
       </div>
     </div>
   );
