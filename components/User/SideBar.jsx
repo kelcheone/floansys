@@ -52,7 +52,11 @@ const SideBar = () => {
         </div>
       </div>
       <div className="flex items-center justify-center w-full h-1/3">
-        <Button label="Pay Bill" />
+        <Button
+          // onclink reroute to payment page
+          onClick={() => console.log("clicked")}
+          label="Pay Bill"
+        />
       </div>
     </div>
   );
