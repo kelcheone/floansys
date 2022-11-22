@@ -13,31 +13,31 @@ const SideBar = () => {
         <Button>
           <div className="flex items-center justify-between bg-red font-bold">
             <RiDashboardFill className="mr-2  text-[#5ECDDC]" />
-            Dashboard
+            <a href="/dashboard">Dashboard</a>
           </div>
         </Button>
         <Button>
           <div className="flex items-center justify-between  bg-red font-bold">
             <HiDocumentText className="mr-2 text-[#5ECDDC]" />
-            Applications
+            <a href="/dashboard/applications">Applications</a>
           </div>
         </Button>
         <Button>
           <div className="flex items-center justify-between bg-red font-bold">
             <GoVerified className="mr-2 text-[#5ECDDC]" />
-            Verify User
+            <a href="/dashboard/verify">Verify User</a>
           </div>
         </Button>
         <Button>
           <div className="flex items-center justify-between bg-red font-bold">
             <FaUsers className="mr-2 text-[#5ECDDC]" />
-            Users onsdfgs
+            <a href="/dashboard/users">Users</a>
           </div>
         </Button>
         <Button>
           <div className="flex items-center justify-between bg-red font-bold ">
             <IoMdSettings className="mr-2 text-[#5ECDDC]" />
-            Settings
+            <a href="/dashboard/settings">Settings</a>
           </div>
         </Button>
       </div>
