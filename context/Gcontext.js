@@ -5,18 +5,10 @@ import React, { createContext, useState, useEffect } from "react";
 
 export const Gcontext = createContext();
 
-let base_url = "http://localhost:8000";
+let base_url = "http://localhost:8000/auth";
 
 export const GcontextProvider = (props) => {
   const router = useRouter();
-  /**
-     * first_name
-last_name
-national_id
-phone_number
-email
-password
-     */
   const [FormData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -62,17 +54,13 @@ password
   async function handleLogin(e) {
     e.preventDefault();
     console.log(loginData);
-    const res = await fetch(
-      `http://localhost:8000/signin
-    `,
-      {
-        method: "POST",
-        body: JSON.stringify(loginData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(`${base_url}/signin`, {
+      method: "POST",
+      body: JSON.stringify(loginData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     console.log(res);
     if (res.ok) {
       const json = await res.json();
