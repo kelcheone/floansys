@@ -1,30 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+
+import { Gcontext } from "../../context/Gcontext";
 
 const SignupForm = () => {
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(user);
-  };
+  const { handleChange, handleSignup } = useContext(Gcontext);
 
   return (
     <div className="flex flex-col">
       <h1 className="text-3xl font-bold text-center mb-2">Welcome</h1>
       <h2 className="text-xl text-center mb-8">Create your account</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSignup(e)}>
         <div className="flex flex-row mb-2">
           <div className="mb-2 mr-2">
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -35,8 +20,7 @@ const SignupForm = () => {
               type="text"
               placeholder="First Name"
               name="firstName"
-              value={user.firstName}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, "first_name")}
             />
           </div>
           <div className="mb-2">
@@ -48,8 +32,7 @@ const SignupForm = () => {
               type="text"
               placeholder="Last Name"
               name="lastName"
-              value={user.lastName}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, "last_name")}
             />
           </div>
         </div>
@@ -62,8 +45,19 @@ const SignupForm = () => {
             type="email"
             placeholder="Email"
             name="email"
-            value={user.email}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e, "email")}
+          />
+        </div>
+        <div className="mb-2">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            National ID
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-black focus:text-white focus:outline-none focus:shadow-outline"
+            type="number"
+            placeholder="ID Number"
+            name="email"
+            onChange={(e) => handleChange(e, "national_id")}
           />
         </div>
         <div className="mb-2">
@@ -75,8 +69,7 @@ const SignupForm = () => {
             type="text"
             placeholder="Phone"
             name="phone"
-            value={user.phone}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e, "phone_number")}
           />
         </div>
         <div className="mb-2">
@@ -88,24 +81,9 @@ const SignupForm = () => {
             type="password"
             placeholder="Password"
             name="password"
-            value={user.password}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e, "password")}
           />
         </div>
-        <div className="mb-2">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Confirm Password
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-black focus:text-white focus:outline-none focus:shadow-outline"
-            type="password"
-            placeholder="Confirm Password"
-            name="confirmPassword"
-            value={user.confirmPassword}
-            onChange={handleChange}
-          />
-        </div>
-
         <div className="flex items-center justify-between">
           <button
             className="bg-[#5ECDDC] hover:bg-[#2a7a9c] text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -122,7 +100,7 @@ const SignupForm = () => {
 
         <a
           className="inilne-block align-baseline text-sm text-black hover:text-[#113c42] underline"
-          href="/login"
+          href="/auth/login"
         >
           Log In
         </a>

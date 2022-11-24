@@ -17,12 +17,12 @@ const LandingPage = () => {
           you get the money you need.
         </p>
         <div className="flex flex-row justify-center items-center mt-4">
-          <Link href="/login">
+          <Link href="/auth/login">
             <button className="flex items-center justify-center w-32 h-10 bg-black rounded-lg text-white mr-4">
               Login
             </button>
           </Link>
-          <Link href="/signup">
+          <Link href="/auth/signup">
             <button className="flex items-center justify-center w-32 h-10 bg-red-400 rounded-lg text-white">
               Sign Up
             </button>

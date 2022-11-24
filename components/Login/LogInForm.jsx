@@ -1,22 +1,18 @@
 // Log in form
 // styled with tailwindcss
 
-import { useState } from "react";
+import { useContext, useState } from "react";
+
+import { Gcontext } from "../../context/Gcontext";
 
 const LogInForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email, password);
-  };
+  const { handleChangeLogin, handleLogin } = useContext(Gcontext);
 
   return (
     <div className="flex flex-col">
       <h1 className="text-3xl font-bold text-center mb-4">Welcome Back</h1>
       <h2 className="text-xl text-center mb-8">Log in to your account</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleLogin(e)}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Email
@@ -25,8 +21,7 @@ const LogInForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-black focus:text-white focus:outline-none focus:shadow-outline"
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleChangeLogin(e, "username")}
           />
         </div>
         <div className="mb-4">
@@ -37,8 +32,7 @@ const LogInForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3  bg-black focus:text-white leading-tight focus:outline-none focus:shadow-outline"
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => handleChangeLogin(e, "password")}
           />
         </div>
         <div className="flex items-center justify-between">
