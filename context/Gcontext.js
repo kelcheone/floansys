@@ -64,7 +64,8 @@ export const GcontextProvider = (props) => {
     console.log(res);
     if (res.ok) {
       const json = await res.json();
-      localStorage.setItem("token", json.token);
+      // set token as cookie
+      document.cookie = `token=${json.token}; path=/`;
       router.push("/user");
     } else {
       alert("Bad credentials");
@@ -73,6 +74,11 @@ export const GcontextProvider = (props) => {
 
   const handleChangeLogin = (e, name) => {
     setLoginData((prevState) => ({ ...prevState, [name]: e.target.value }));
+  };
+  // Extract user id from token in the local storage
+  const extractUserId = () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
   };
 
   return (
@@ -85,6 +91,7 @@ export const GcontextProvider = (props) => {
         handleChange,
         handleLogin,
         handleChangeLogin,
+        extractUserId,
       }}
     >
       {props.children}

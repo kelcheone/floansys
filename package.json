@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "chart.js": "^4.0.1",
-    "d3": "^7.6.1",
+    "cookie": "^0.5.0",
+    "jose": "^4.11.1",
+    "jsonwebtoken": "^8.5.1",
     "next": "latest",
     "react": "18.2.0",
     "react-chartjs-2": "^5.0.1",
