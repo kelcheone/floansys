@@ -6,10 +6,11 @@ import { Gcontext } from "../../context/Gcontext";
 // import from jose to decode token
 
 const User = () => {
-  const { extractUserId } = useContext(Gcontext);
+  const { extractUserId, userDetails } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
   useEffect(() => {
     extractUserId();
+    userDetails();
   }, []);
   return (
     <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap h-screen bg-background w-screen">
