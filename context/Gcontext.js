@@ -7,8 +7,10 @@ import { parseJwt } from "../lib/utils";
 export const Gcontext = createContext();
 
 let base_url = "http://localhost:8000/auth";
+const loanUrl = "http://localhost:8000/loans";
 
 export const GcontextProvider = (props) => {
+  const [user, setUser] = useState(null);
   const router = useRouter();
   const [FormData, setFormData] = useState({
     first_name: "",
@@ -23,6 +25,60 @@ export const GcontextProvider = (props) => {
     username: "",
     password: "",
   });
+
+  // Loans///////////////////////////////////////////////////////////////////////////////
+
+  const [showGurantor, setShowGuarantor] = useState(false);
+  const [loanFormData, setLoanFormData] = useState({
+    // turn amount to float
+    amount: "",
+    interest: "",
+    due_date: "",
+  });
+  const [show, setShow] = useState(false);
+  const [selectedInterest, setSelectedInterest] = useState(
+    "Select Loan Interest"
+  );
+  const [isAdded, setIsAdded] = useState(false);
+
+  const handleSelect = (e) => {
+    setSelectedInterest(e.target.innerText);
+    setLoanFormData({ ...loanFormData, interest: e.target.innerText });
+
+    setShow(false);
+  };
+
+  const handleSubmitLoanForm = async (e) => {
+    e.preventDefault();
+    let newObject = {
+      // turn amount to float
+      amount: parseFloat(loanFormData.amount),
+      interest: parseFloat(loanFormData.interest),
+      due_date: loanFormData.due_date,
+    };
+    console.log(JSON.stringify(newObject));
+    const res = await fetch(loanUrl, {
+      method: "POST",
+      // convert amount and interest to float
+
+      body: JSON.stringify(newObject),
+
+      headers: {
+        "Content-Type": "application/json",
+        // get token from storage
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    setIsAdded(true);
+    // send the request to the server
+    // if the request is successful
+    // close the modal
+  };
+
+  // upload loan
+
+  ///////////////////////////////////////////////////////////////////////////
 
   const handleChange = (e, name) => {
     setFormData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -98,10 +154,24 @@ export const GcontextProvider = (props) => {
     console.log(decoded);
   };
 
+  const userDetails = async () => {
+    const res = await fetch("http://localhost:8000/users/1", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+    setUser(data);
+  };
+
   return (
     <Gcontext.Provider
       value={{
         FormData,
+        user,
         loginData,
         setFormData,
         handleSignup,
@@ -109,6 +179,19 @@ export const GcontextProvider = (props) => {
         handleLogin,
         handleChangeLogin,
         extractUserId,
+        userDetails,
+        showGurantor,
+        setShowGuarantor,
+        loanFormData,
+        setLoanFormData,
+        show,
+        setShow,
+        selectedInterest,
+        setSelectedInterest,
+        handleSelect,
+        handleSubmitLoanForm,
+        isAdded,
+        setIsAdded,
       }}
     >
       {props.children}

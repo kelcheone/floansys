@@ -1,5 +1,8 @@
 import Button from "./Button";
 
+import { Gcontext } from "../../context/Gcontext";
+import { useContext } from "react";
+
 const data = {
   name: "John Doe",
   email: "johndoe@gmail.com",
@@ -21,6 +24,7 @@ const data = {
 };
 
 const SideBar = () => {
+  const { user } = useContext(Gcontext);
   return (
     <div className="flex flex-col mr-4 rounded-r-lg items-center justify-center w-full h-screen bg-sidebar">
       <div className="flex flex-col items-center justify-center w-full h-1/3">
@@ -29,8 +33,10 @@ const SideBar = () => {
           src="https://picsum.photos/200"
           alt="user"
         />
-        <h1 className="mt-2 text-2xl font-bold text-black">{data.name}</h1>
-        <p className="text-sm text-black">{data.email}</p>
+        <h1 className="mt-2 text-2xl font-bold text-black">
+          {user?.first_name} {user?.last_name}
+        </h1>
+        <p className="text-sm text-black">{user?.email}</p>
       </div>
       {/* amount owed */}
       <div className="text-black text-center">
