@@ -11,6 +11,7 @@ export async function middleware(req: NextRequest) {
     console.error(err.message);
   });
 
+
   if (!verifiedToken) {
     // if this an API request, respond with JSON
     if (req.nextUrl.pathname.startsWith("/api/")) {

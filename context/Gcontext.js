@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/router";
 import React, { createContext, useState, useEffect } from "react";
+import { parseJwt } from "../lib/utils";
 
 export const Gcontext = createContext();
 
@@ -66,10 +67,24 @@ export const GcontextProvider = (props) => {
       const json = await res.json();
       // set token as cookie
       document.cookie = `token=${json.token}; path=/`;
+      // store token in local storage
+      localStorage.setItem("token", json.token);
+
+      // get user id from token
+      const token = json.token;
+      // decode token and redirect to user with user id
+      try {
+        const decoded = parseJwt(token);
+        console.log(decoded);
+      } catch (err) {
+        console.log(err);
+      }
+
       router.push("/user");
     } else {
       alert("Bad credentials");
     }
+    return res;
   }
 
   const handleChangeLogin = (e, name) => {
@@ -77,8 +92,10 @@ export const GcontextProvider = (props) => {
   };
   // Extract user id from token in the local storage
   const extractUserId = () => {
-    const token = localStorage.getItem("token");
-    console.log(token);
+    const token = document.cookie.split("=")[2];
+    const decoded = parseJwt(token);
+
+    console.log(decoded);
   };
 
   return (
