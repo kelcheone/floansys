@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/_app.jsx",
-    "pages/index.tsx"
+    "pages/index.tsx",
+    "services/jwt_sign_verify.js"
   ],
   "exclude": ["node_modules"]
 }

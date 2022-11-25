@@ -1,10 +1,16 @@
 import SideBar from "./SideBar";
 import UserContent from "./UserContent";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Gcontext } from "../../context/Gcontext";
+// import from jose to decode token
 
 const User = () => {
+  const { extractUserId } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
+  useEffect(() => {
+    extractUserId();
+  }, []);
   return (
     <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap h-screen bg-background w-screen">
       <div
