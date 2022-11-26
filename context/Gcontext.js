@@ -282,14 +282,46 @@ export const GcontextProvider = (props) => {
 
     const data = await res.json();
     // change date format in the data
-    const new_data = data?.map((item) => {
-      const date = new Date(Date.parse(item.transaction_date)).toDateString();
-      return { ...item, date };
-    });
+    // if data exists
+    if (data.length > 0) {
+      const new_data = data?.map((item) => {
+        const date = new Date(Date.parse(item.transaction_date)).toDateString();
+        return { ...item, date };
+      });
 
-    setPaidLoans(new_data);
-    console.log(new_data);
+      setPaidLoans(new_data);
+      console.log(new_data);
+    }
   };
+
+  //////////////////////////////Pay Loan///////////////////////////////////////
+  const [showPaybillModal, setShowPaybillModal] = useState(false);
+  const [paidAmount, setPaidAmount] = useState(0);
+  const [selectedLoanId, setSelectedLoanId] = useState(0);
+  // const [paybillFormData, setPaybillFormData] = useState({
+  //   amount: "",
+  //   loan_id: 0,
+  // });
+
+  const handlePaybillSubmit = (e) => {
+    console.log({ paidAmount, selectedLoanId });
+
+    const res = fetch("http://localhost:8000/loans/pay", {
+      method: "PATCH",
+      body: JSON.stringify({ amount: paidAmount, loan_id: selectedLoanId }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log(res);
+    // alert("Payment Successful");
+    setShowPaybillModal(false);
+  };
+
+  // from userLoans extract loan_ids
+  const allLoan_ids = userLoans?.map((item) => item.loan_id);
+
   return (
     <Gcontext.Provider
       value={{
@@ -331,6 +363,14 @@ export const GcontextProvider = (props) => {
         transactions,
         getPaidLoans,
         paidLoans,
+        showPaybillModal,
+        setShowPaybillModal,
+        handlePaybillSubmit,
+        paidAmount,
+        setPaidAmount,
+        selectedLoanId,
+        setSelectedLoanId,
+        allLoan_ids,
       }}
     >
       {props.children}

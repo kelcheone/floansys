@@ -2,29 +2,16 @@ import Button from "./Button";
 
 import { Gcontext } from "../../context/Gcontext";
 import { useContext } from "react";
-
-const data = {
-  name: "John Doe",
-  email: "johndoe@gmail.com",
-  paymentDates: [
-    {
-      date: "01/01/2021",
-      amount: "$100",
-    },
-    {
-      date: "02/01/2021",
-      amount: "$100",
-    },
-    {
-      date: "03/01/2021",
-      amount: "$100",
-    },
-  ],
-  paymentAmount: "$300",
-};
+import PaybillModal from "./PaybillModal";
 
 const SideBar = () => {
-  const { user, transactionsm, paidLoans } = useContext(Gcontext);
+  const {
+    user,
+    paidLoans,
+    LoanDetails,
+    showPaybillModal,
+    setShowPaybillModal,
+  } = useContext(Gcontext);
   return (
     <div className="flex flex-col mr-4 rounded-r-lg items-center justify-center w-full h-screen bg-sidebar">
       <div className="flex flex-col items-center justify-center w-full h-1/3">
@@ -41,39 +28,40 @@ const SideBar = () => {
       {/* amount owed */}
       <div className="text-black text-center">
         <h1 className="text-xl font-bold text-black">Amount Owed</h1>
-        <p className="text-xl font-bold text-black">{data.paymentAmount}</p>
+        <p className="text-xl font-bold text-black">${LoanDetails.Balance}</p>
       </div>
       <div className="flex flex-col items-center justify-center w-full h-1/3">
         <h1 className="text-xl font-bold text-black">Payment Dates</h1>
         <div className="flex flex-col items-center justify-center w-full h-2/3 px-5">
-          {/* {data.paymentDates.map((paymentDate, index) => (
+          {/* show the first 5 loans only */}
+          {paidLoans?.slice(0, 5).map((loan) => (
             <div
-              key={index}
-              className="flex items-center justify-between w-full h-1/3"
+              key={loan.id}
+              className="flex flex-row items-center justify-between w-full h-1/5"
             >
-              <p className="text-sm text-white">{paymentDate.date}</p>
-              <p className="text-sm text-white">{paymentDate.amount}</p>
-            </div>
-          ))} */}
-          {/* show paid Loans */}
-          {paidLoans?.map((paidLoan, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between w-full h-1/3"
-            >
-              <p className="text-sm text-white">{paidLoan?.date}</p>
-              <p className="text-sm text-white">{paidLoan?.amount}</p>
+              <p key={loan.id} className="text-sm text-black">
+                {loan.date}
+              </p>
+              <p key={loan.id} className="text-sm text-black">
+                ${loan.amount}
+              </p>
             </div>
           ))}
+          {/* if no loans */}
+          {paidLoans?.length === 0 && (
+            <p className="text-sm text-white">No Paid loans yet</p>
+          )}
         </div>
       </div>
       <div className="flex items-center justify-center w-full h-1/3">
         <Button
           // onclink reroute to payment page
-          onClick={() => console.log("clicked")}
+          onClick={() => setShowPaybillModal(!showPaybillModal)}
           label="Pay Bill"
         />
       </div>
+
+      {showPaybillModal && <PaybillModal />}
     </div>
   );
 };

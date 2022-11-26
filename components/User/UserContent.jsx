@@ -5,10 +5,10 @@ import { Gcontext } from "../../context/Gcontext";
 import { useContext, useEffect } from "react";
 
 let user_loan_history = {
-  created_at: "2021-01-01",
-  amount: 800,
-  due_date: "2021-01-01",
-  paid: 100,
+  created_at: "_",
+  amount: 0,
+  due_date: "_",
+  paid: 0,
 };
 
 const UserContent = () => {
@@ -18,7 +18,6 @@ const UserContent = () => {
     console.log({ data });
   }, []);
 
-  console.log(userLoans.length);
   const handleClick = () => {
     // link to add loan page
     console.log("clicked");
@@ -108,10 +107,17 @@ const UserContent = () => {
               );
             }
           })
-        ) : (
+        ) : // if user loans == 1 then display one card and another empty card
+        userLoans.length == 1 ? (
           <>
-            <UserCard user_loan_history={user_loan_history} />
-            <UserCard user_loan_history={user_loan_history} />
+            <UserCard key={0} user_loan_history={userLoans[0]} index={0} />
+            <UserCard key={1} user_loan_history={user_loan_history} index={1} />
+          </>
+        ) : (
+          // if user loans == 0 then display two empty cards
+          <>
+            <UserCard key={0} user_loan_history={user_loan_history} index={0} />
+            <UserCard key={1} user_loan_history={user_loan_history} index={1} />
           </>
         )}
       </div>
