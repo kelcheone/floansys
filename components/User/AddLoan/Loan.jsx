@@ -16,7 +16,7 @@ const Loan = () => {
     loanFormData,
     setLoanFormData,
     setShow,
-
+    handleLoanIds,
     show,
     isAdded,
     setIsAdded,
@@ -99,7 +99,10 @@ const Loan = () => {
           className={`${
             isAdded ? "bg-blue-500" : "bg-gray-500"
           } text-white rounded-lg p-4 mt-4`}
-          onClick={() => setShowGuarantor(!showGurantor)}
+          onClick={() => {
+            handleLoanIds();
+            setShowGuarantor(!showGurantor);
+          }}
         >
           Add Guarantor
         </button>

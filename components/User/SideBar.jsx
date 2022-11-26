@@ -24,7 +24,7 @@ const data = {
 };
 
 const SideBar = () => {
-  const { user } = useContext(Gcontext);
+  const { user, transactionsm, paidLoans } = useContext(Gcontext);
   return (
     <div className="flex flex-col mr-4 rounded-r-lg items-center justify-center w-full h-screen bg-sidebar">
       <div className="flex flex-col items-center justify-center w-full h-1/3">
@@ -46,13 +46,23 @@ const SideBar = () => {
       <div className="flex flex-col items-center justify-center w-full h-1/3">
         <h1 className="text-xl font-bold text-black">Payment Dates</h1>
         <div className="flex flex-col items-center justify-center w-full h-2/3 px-5">
-          {data.paymentDates.map((paymentDate, index) => (
+          {/* {data.paymentDates.map((paymentDate, index) => (
             <div
               key={index}
               className="flex items-center justify-between w-full h-1/3"
             >
               <p className="text-sm text-white">{paymentDate.date}</p>
               <p className="text-sm text-white">{paymentDate.amount}</p>
+            </div>
+          ))} */}
+          {/* show paid Loans */}
+          {paidLoans?.map((paidLoan, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between w-full h-1/3"
+            >
+              <p className="text-sm text-white">{paidLoan?.date}</p>
+              <p className="text-sm text-white">{paidLoan?.amount}</p>
             </div>
           ))}
         </div>

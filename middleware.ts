@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { verifyAuth } from "./lib/auth";
 
 export const config = {
-  matcher: ["/user", "/dashboard"],
+  matcher: ["/user", "/dashboard", "/user/statement", "/user/addloan"],
 };
 
 export async function middleware(req: NextRequest) {
