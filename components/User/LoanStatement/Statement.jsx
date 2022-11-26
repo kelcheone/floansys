@@ -35,7 +35,7 @@ let data = [
   },
 ];
 
-const Statement = () => {
+const MyStatement = () => {
   const { transactions } = useContext(Gcontext);
   return (
     <div className="flex flex-col items-center justify-center w-full h-full m-7 bg-green-500">
@@ -55,10 +55,16 @@ const Statement = () => {
                 key={el.id}
                 className="border-b-2 border-gray-300 text-center"
               >
-                <td className="p-2">{el.transaction_id}</td>
-                <td className="p-2">{el.amount}</td>
+                <td key={el.id} className="p-2">
+                  {el.transaction_id}
+                </td>
+                <td key={el.id} className="p-2">
+                  {el.amount}
+                </td>
                 <td className="p-2">{el.date}</td>
-                <td className="p-2">{el.transaction_type}</td>
+                <td key={el.id} className="p-2">
+                  {el.transaction_type}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -68,4 +74,4 @@ const Statement = () => {
   );
 };
 
-export default Statement;
+export default MyStatement;

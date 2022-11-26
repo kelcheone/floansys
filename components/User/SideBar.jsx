@@ -3,6 +3,7 @@ import Button from "./Button";
 import { Gcontext } from "../../context/Gcontext";
 import { useContext } from "react";
 import PaybillModal from "./PaybillModal";
+import Image from "next/image";
 
 const SideBar = () => {
   const {
@@ -15,9 +16,11 @@ const SideBar = () => {
   return (
     <div className="flex flex-col mr-4 rounded-r-lg items-center justify-center w-full h-screen bg-sidebar">
       <div className="flex flex-col items-center justify-center w-full h-1/3">
-        <img
+        <Image
           className="w-24 h-24 rounded-full"
           src="https://picsum.photos/200"
+          width={100}
+          height={100}
           alt="user"
         />
         <h1 className="mt-2 text-2xl font-bold text-black">

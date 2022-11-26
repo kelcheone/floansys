@@ -6,12 +6,8 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import SideBar from "../../components/DashBoard/SideBar";
 import SettingsCard from "../../components/DashBoard/SettingsCard";
 import { useRouter } from "next/router";
-// const router = useRouter();
-// const { id } = router.query;
 
-// console.log({ id });
-
-const settings = () => {
+const Settings = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
@@ -41,4 +37,4 @@ const settings = () => {
     </div>
   );
 };
-export default settings;
+export default Settings;
