@@ -12,7 +12,7 @@ import Card from "../../components/Users/Card";
 // Paid
 // Status
 
-const users = () => {
+const Users = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
@@ -42,4 +42,4 @@ const users = () => {
     </div>
   );
 };
-export default users;
+export default Users;

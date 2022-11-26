@@ -1,6 +1,7 @@
 // Log in form
 // styled with tailwindcss
 
+import Link from "next/link";
 import { useContext, useState } from "react";
 
 import { Gcontext } from "../../context/Gcontext";
@@ -45,31 +46,31 @@ const LogInForm = () => {
         </div>
       </form>
       <div className="flex items-center justify-between mt-4">
-        <a
+        <Link
           className="inilne-block align-baseline text-sm text-black hover:text-[#113c42] underline"
           href="#"
         >
           Forgot Password?
-        </a>
+        </Link>
         <div>
-          <a
+          <Link
             className="inilne-block align-baseline  text-sm text-black hover:text-[#113c42] underline"
             href="#"
           >
             Admin Login
-          </a>
+          </Link>
         </div>
       </div>
       <div className="flex items-center justify-between mt-4">
         <p className="text-sm text-center text-gray-500">
           Don't have an account?
         </p>
-        <a
+        <Link
           className="inilne-block align-baseline text-sm text-black hover:text-[#113c42] underline"
-          href="/signup"
+          href="/auth/signup"
         >
           Sign Up
-        </a>
+        </Link>
       </div>
     </div>
   );
