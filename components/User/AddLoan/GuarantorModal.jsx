@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import AddFile from "./AddFile";
+import { AiOutlineArrowDown } from "react-icons/ai";
+import { Gcontext } from "../../../context/Gcontext";
 
 const GuarantorModal = ({ show, setShow }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [nationalId, setNationalId] = useState("");
-  const [isUser, setIsUser] = useState(false);
-  const [file, setFile] = useState(null);
+  const {
+    showLoanId,
+    setShowLoanId,
+    handleSelectLoanId,
+    guarantor,
+    setGuarantor,
+    handleSubmitGuarantorForm,
+    handleLoanIds,
+    Loan_ids,
+  } = useContext(Gcontext);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // send the request to the server
-    // if the request is successful
-    // close the modal
-    setShow(false);
-  };
+  useEffect(() => {
+    handleLoanIds();
+  }, []);
 
   return (
     <div
@@ -35,7 +35,7 @@ const GuarantorModal = ({ show, setShow }) => {
             />
           </div>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmitGuarantorForm}
             className="flex flex-col items-center justify-center w-full h-full p-4"
           >
             <div className="flex flex-row items-center justify-between  w-full h-full p-4">
@@ -43,38 +43,43 @@ const GuarantorModal = ({ show, setShow }) => {
                 type="text"
                 placeholder="First Name"
                 className="w-full h-12 rounded-lg p-4 mb-4 mr-2 bg-black text-white"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e) =>
+                  setGuarantor({ ...guarantor, first_name: e.target.value })
+                }
               />
 
               <input
                 type="text"
                 placeholder="Last Name"
                 className="w-full h-12 rounded-lg p-4 mb-4 bg-black text-white"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) =>
+                  setGuarantor({ ...guarantor, last_name: e.target.value })
+                }
               />
             </div>
             <input
               type="text"
               placeholder="Phone Number"
               className="w-full h-12 rounded-lg p-4 mb-4 bg-black text-white"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={(e) =>
+                setGuarantor({ ...guarantor, phone_number: e.target.value })
+              }
             />
             <input
               type="text"
               placeholder="Email"
               className="w-full h-12 rounded-lg p-4 mb-4 bg-black text-white"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) =>
+                setGuarantor({ ...guarantor, email: e.target.value })
+              }
             />
             <input
               type="text"
               placeholder="National Id"
               className="w-full h-12 rounded-lg p-4 mb-4 bg-black text-white"
-              value={nationalId}
-              onChange={(e) => setNationalId(e.target.value)}
+              onChange={(e) =>
+                setGuarantor({ ...guarantor, national_id: e.target.value })
+              }
             />
             <div className="flex items-center justify-between w-full mb-4">
               <h1 className="text-lg font-semibold">
@@ -83,11 +88,34 @@ const GuarantorModal = ({ show, setShow }) => {
               <input
                 type="checkbox"
                 className="w-6 h-6 rounded-lg "
-                checked={isUser}
-                onChange={(e) => setIsUser(e.target.checked)}
+                onChange={(e) =>
+                  setGuarantor({ ...guarantor, is_user: e.target.checked })
+                }
               />
             </div>
-            <AddFile file={file} setFile={setFile} />
+            <div className="relative w-full mb-4">
+              <div
+                className="flex items-center justify-between w-full h-12 rounded-lg p-4 bg-black text-white"
+                onClick={() => setShowLoanId(!showLoanId)}
+              >
+                <h1>{Loan_ids.length > 0 ? Loan_ids[0] : "No Loans found"}</h1>
+                <AiOutlineArrowDown />
+              </div>
+              {showLoanId && (
+                // loop through the loan ids and map to the select loan id
+                <div className="absolute top-12 w-full h-20 overflow-y-scroll bg-black text-white rounded-lg shadow-lg">
+                  {Loan_ids.map((loan_id) => (
+                    <div
+                      className="w-full h-12 p-4"
+                      onClick={() => handleSelectLoanId(loan_id)}
+                    >
+                      {loan_id}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <button
               type="submit"
               className="w-full h-12 rounded-lg bg-blue-500 text-white font-semibold"

@@ -69,6 +69,8 @@ export const GcontextProvider = (props) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
+    const data = await res.json();
+    console.log(data);
 
     setIsAdded(true);
     // send the request to the server
@@ -79,6 +81,69 @@ export const GcontextProvider = (props) => {
   // upload loan
 
   ///////////////////////////////////////////////////////////////////////////
+
+  ////////////Guarantor////////////////////
+  const [showLoanId, setShowLoanId] = useState(false);
+  const [guarantor, setGuarantor] = useState({
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    email: "",
+    national_id: "",
+    is_user: false,
+    loan_id: "",
+  });
+
+  const handleSelectLoanId = (loan_id) => {
+    setGuarantor({ ...guarantor, loan_id: loan_id });
+    setShowLoanId(false);
+    console.log(loan_id);
+  };
+  const [Loan_ids, setLoan_ids] = useState([]);
+
+  // Get loan_ids without guarantors
+  const handleLoanIds = async () => {
+    const res = await fetch("http://localhost:8000/guarantors/no", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    const loan_ids = data.map((item) => item.loan_id);
+    setLoan_ids(loan_ids);
+
+    console.log(Loan_ids);
+    return data;
+  };
+
+  const handleSubmitGuarantorForm = (e) => {
+    e.preventDefault();
+    // send the request to the server
+    const res = fetch("http://localhost:8000/guarantors", {
+      method: "POST",
+      body: JSON.stringify(guarantor),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    // if the request is successful
+
+    // const data = res.json();
+    console.log(res);
+
+    // close the modal
+    console.log(JSON.stringify(guarantor));
+
+    setShowGuarantor(false);
+  };
+
+  ////////////////////////////////////////////////////
+
+  ///////////////////////////AUTHENTICATION////////////////////////////////////
 
   const handleChange = (e, name) => {
     setFormData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -155,7 +220,7 @@ export const GcontextProvider = (props) => {
   };
 
   const userDetails = async () => {
-    const res = await fetch("http://localhost:8000/users/1", {
+    const res = await fetch("http://localhost:8000/users/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -192,6 +257,14 @@ export const GcontextProvider = (props) => {
         handleSubmitLoanForm,
         isAdded,
         setIsAdded,
+        showLoanId,
+        setShowLoanId,
+        handleSubmitGuarantorForm,
+        handleSelectLoanId,
+        guarantor,
+        setGuarantor,
+        handleLoanIds,
+        Loan_ids,
       }}
     >
       {props.children}

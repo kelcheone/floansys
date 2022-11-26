@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loan from "../../components/User/AddLoan/Loan";
+import { Gcontext } from "../../context/Gcontext";
 const AddLoan = () => {
-  const [file, setFile] = useState(null);
+  const { handleLoanIds } = useContext(Gcontext);
+
+  useEffect(() => {
+    handleLoanIds();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[#D8EBEC] p-16">
