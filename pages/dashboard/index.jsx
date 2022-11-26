@@ -10,7 +10,7 @@ import Applications from "../../components/DashBoard/Applications";
 import Verified from "../../components/DashBoard/Verified";
 import Users from "../../components/DashBoard/Users";
 
-const dashboard = () => {
+const Dashboard = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
@@ -73,4 +73,4 @@ const dashboard = () => {
     </div>
   );
 };
-export default dashboard;
+export default Dashboard;

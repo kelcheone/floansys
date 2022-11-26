@@ -5,6 +5,7 @@ import { HiDocumentText } from "react-icons/hi";
 import { IoMdSettings } from "react-icons/io";
 
 import Button from "./Button";
+import Link from "next/link";
 
 const SideBar = () => {
   return (
@@ -13,31 +14,31 @@ const SideBar = () => {
         <Button>
           <div className="flex items-center justify-between bg-red font-bold">
             <RiDashboardFill className="mr-2  text-[#5ECDDC]" />
-            <a href="/dashboard">Dashboard</a>
+            <Link href="/dashboard">Dashboard</Link>
           </div>
         </Button>
         <Button>
           <div className="flex items-center justify-between  bg-red font-bold">
             <HiDocumentText className="mr-2 text-[#5ECDDC]" />
-            <a href="/dashboard/applications">Applications</a>
+            <Link href="/dashboard/applications">Applications</Link>
           </div>
         </Button>
         <Button>
           <div className="flex items-center justify-between bg-red font-bold">
             <GoVerified className="mr-2 text-[#5ECDDC]" />
-            <a href="/dashboard/verify">Verify User</a>
+            <Link href="/dashboard/verify">Verify User</Link>
           </div>
         </Button>
         <Button>
           <div className="flex items-center justify-between bg-red font-bold">
             <FaUsers className="mr-2 text-[#5ECDDC]" />
-            <a href="/dashboard/users">Users</a>
+            <Link href="/dashboard/users">Users</Link>
           </div>
         </Button>
         <Button>
           <div className="flex items-center justify-between bg-red font-bold ">
             <IoMdSettings className="mr-2 text-[#5ECDDC]" />
-            <a href="/dashboard/settings">Settings</a>
+            <Link href="/dashboard/settings">Settings</Link>
           </div>
         </Button>
       </div>
