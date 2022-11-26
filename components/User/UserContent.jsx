@@ -1,16 +1,23 @@
 import Link from "next/link";
 import Button from "./Button";
 import UserCard from "./UserCard";
+import { Gcontext } from "../../context/Gcontext";
+import { useContext, useEffect } from "react";
 
 let user_loan_history = {
-  borrow_date: "2021-01-01",
-  amount: "$100",
-  date_to_pay: "2021-01-01",
-  amount_to_pay: "$100",
-  amount_paid: "$100",
+  created_at: "_",
+  amount: 0,
+  due_date: "_",
+  paid: 0,
 };
 
 const UserContent = () => {
+  const { userLoans, getUserLoanDetails, LoanDetails } = useContext(Gcontext);
+  useEffect(() => {
+    const data = getUserLoanDetails();
+    console.log({ data });
+  }, []);
+
   const handleClick = () => {
     // link to add loan page
     console.log("clicked");
@@ -48,13 +55,28 @@ const UserContent = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td className="border-r-2 border-gray-300  px-4 py-2">1</td>
                   <td className="border-r-2 border-gray-300  px-4 py-2">
-                    23 Months
+                    {Object.keys(LoanDetails)?.length > 0
+                      ? LoanDetails.loans
+                      : "No loans"}
                   </td>
-                  <td className="border-r-2 border-gray-300  px-4 py-2">10%</td>
                   <td className="border-r-2 border-gray-300  px-4 py-2">
-                    $100
+                    {Object.keys(LoanDetails)?.length > 0
+                      ? LoanDetails.time
+                      : ""}
+                    <span className="font-bold"> Months</span>
+                  </td>
+                  <td className="border-r-2 border-gray-300  px-4 py-2">
+                    {Object.keys(LoanDetails)?.length > 0
+                      ? LoanDetails.apr
+                      : ""}
+                    %
+                  </td>
+                  <td className="border-r-2 border-gray-300  px-4 py-2">
+                    $
+                    {Object.keys(LoanDetails)?.length > 0
+                      ? LoanDetails.Balance
+                      : ""}
                   </td>
                 </tr>
               </tbody>
@@ -77,9 +99,27 @@ const UserContent = () => {
         <h1 className="text-2xl font-bold text-gray-700">Loan History</h1>
       </div>
       <div className="flex md:flex-row flex-col items-center justify-center w-full h-full">
-        <UserCard user_loan_history={user_loan_history} />
-
-        <UserCard user_loan_history={user_loan_history} />
+        {userLoans.length >= 2 ? (
+          userLoans.map((loan, index) => {
+            if (index < 2) {
+              return (
+                <UserCard key={index} user_loan_history={loan} index={index} />
+              );
+            }
+          })
+        ) : // if user loans == 1 then display one card and another empty card
+        userLoans.length == 1 ? (
+          <>
+            <UserCard key={0} user_loan_history={userLoans[0]} index={0} />
+            <UserCard key={1} user_loan_history={user_loan_history} index={1} />
+          </>
+        ) : (
+          // if user loans == 0 then display two empty cards
+          <>
+            <UserCard key={0} user_loan_history={user_loan_history} index={0} />
+            <UserCard key={1} user_loan_history={user_loan_history} index={1} />
+          </>
+        )}
       </div>
 
       <div className="flex items-center justify-center w-full h-1/3">

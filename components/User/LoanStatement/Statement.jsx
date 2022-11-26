@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { Gcontext } from "../../../context/Gcontext";
 let data = [
   {
     id: 1,
@@ -34,30 +36,29 @@ let data = [
 ];
 
 const Statement = () => {
+  const { transactions } = useContext(Gcontext);
   return (
     <div className="flex flex-col items-center justify-center w-full h-full m-7 bg-green-500">
       <div className="flex flex-col items-center justify-center w-full h-full bg-[#ACBFB7]">
         <table className="w-full">
           <thead>
             <tr className="border-b-2 border-gray-300">
-              <th className="p-2">Borrow Date</th>
+              <th className="p-2">Id</th>
+              <th className="p-2">Dates</th>
               <th className="p-2">Amount</th>
-              <th className="p-2">Repayment Date</th>
-              <th className="p-2">Status</th>
-              <th className="p-2">Amount Repaid</th>
+              <th className="p-2">Type</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {transactions?.map((el) => (
               <tr
-                key={item.id}
+                key={el.id}
                 className="border-b-2 border-gray-300 text-center"
               >
-                <td className="p-2">{item.borrowdate}</td>
-                <td className="p-2">{item.amount}</td>
-                <td className="p-2">{item.repaymentdate}</td>
-                <td className="p-2">{item.status}</td>
-                <td className="p-2">{item.amountrepaid}</td>
+                <td className="p-2">{el.transaction_id}</td>
+                <td className="p-2">{el.amount}</td>
+                <td className="p-2">{el.date}</td>
+                <td className="p-2">{el.transaction_type}</td>
               </tr>
             ))}
           </tbody>

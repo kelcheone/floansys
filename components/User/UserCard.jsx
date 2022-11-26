@@ -4,7 +4,7 @@ const UserCard = ({ user_loan_history }) => {
       <div className="flex flex-col items-center justify-center w-full h-2/3">
         <div className="flex md:items-center justify-between w-full h-1/3">
           <p className="text-sm text-black">Borrow Date</p>
-          <p className="text-sm text-black">{user_loan_history.borrow_date}</p>
+          <p className="text-sm text-black">{user_loan_history.due_date}</p>
         </div>
         <div className="flex items-center justify-between w-full h-1/3">
           <p className="text-sm text-black">Amount</p>
@@ -12,17 +12,17 @@ const UserCard = ({ user_loan_history }) => {
         </div>
         <div className="flex items-center justify-between w-full h-1/3">
           <p className="text-sm text-black">Date to Pay</p>
-          <p className="text-sm text-black">{user_loan_history.date_to_pay}</p>
+          <p className="text-sm text-black">{user_loan_history.due_date}</p>
         </div>
         <div className="flex items-center justify-between w-full h-1/3">
           <p className="text-sm text-black">Amount to Pay</p>
           <p className="text-sm text-black">
-            {user_loan_history.amount_to_pay}
+            {user_loan_history.amount - user_loan_history.paid}
           </p>
         </div>
         <div className="flex items-center justify-between w-full h-1/3">
           <p className="text-sm text-black">Amount Paid</p>
-          <p className="text-sm text-black">{user_loan_history.amount_paid}</p>
+          <p className="text-sm text-black">{user_loan_history.paid}</p>
         </div>
       </div>
     </div>

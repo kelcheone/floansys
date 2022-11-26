@@ -98,7 +98,7 @@ const GuarantorModal = ({ show, setShow }) => {
                 className="flex items-center justify-between w-full h-12 rounded-lg p-4 bg-black text-white"
                 onClick={() => setShowLoanId(!showLoanId)}
               >
-                <h1>{Loan_ids.length > 0 ? Loan_ids[0] : "No Loans found"}</h1>
+                <h1>{Loan_ids.length > 0 ? Loan_ids[0] : "No Loans"}</h1>
                 <AiOutlineArrowDown />
               </div>
               {showLoanId && (

@@ -70,7 +70,6 @@ export const GcontextProvider = (props) => {
       },
     });
     const data = await res.json();
-    console.log(data);
 
     setIsAdded(true);
     // send the request to the server
@@ -97,7 +96,6 @@ export const GcontextProvider = (props) => {
   const handleSelectLoanId = (loan_id) => {
     setGuarantor({ ...guarantor, loan_id: loan_id });
     setShowLoanId(false);
-    console.log(loan_id);
   };
   const [Loan_ids, setLoan_ids] = useState([]);
 
@@ -114,7 +112,6 @@ export const GcontextProvider = (props) => {
     const loan_ids = data.map((item) => item.loan_id);
     setLoan_ids(loan_ids);
 
-    console.log(Loan_ids);
     return data;
   };
 
@@ -129,13 +126,6 @@ export const GcontextProvider = (props) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-
-    // if the request is successful
-
-    // const data = res.json();
-    console.log(res);
-
-    // close the modal
     console.log(JSON.stringify(guarantor));
 
     setShowGuarantor(false);
@@ -160,9 +150,7 @@ export const GcontextProvider = (props) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res);
 
-    // const data = await res.json();
     if (res.status !== 201 || !res) {
       window.alert("Invalid Registration");
       console.log("Invalid Registration");
@@ -183,7 +171,6 @@ export const GcontextProvider = (props) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res);
     if (res.ok) {
       const json = await res.json();
       // set token as cookie
@@ -196,9 +183,8 @@ export const GcontextProvider = (props) => {
       // decode token and redirect to user with user id
       try {
         const decoded = parseJwt(token);
-        console.log(decoded);
       } catch (err) {
-        console.log(err);
+        throw new Error("Invalid token");
       }
 
       router.push("/user");
@@ -215,8 +201,6 @@ export const GcontextProvider = (props) => {
   const extractUserId = () => {
     const token = document.cookie.split("=")[2];
     const decoded = parseJwt(token);
-
-    console.log(decoded);
   };
 
   const userDetails = async () => {
@@ -228,9 +212,118 @@ export const GcontextProvider = (props) => {
       },
     });
     const data = await res.json();
-    console.log(data);
     setUser(data);
   };
+
+  ///////////////////////////////USER LOANS////////////////////////////////////
+  const [userLoans, setUserLoans] = useState([]);
+
+  const getUserLoans = async () => {
+    const res = await fetch("http://localhost:8000/loans/my-loans", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+
+    setUserLoans(data);
+  };
+  ////////////////user Loan details/////////////////////
+  const [LoanDetails, setLoanDetatils] = useState([]);
+
+  const getUserLoanDetails = async () => {
+    const res = await fetch("http://localhost:8000/loans/details", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setLoanDetatils(data);
+
+    return data;
+  };
+
+  /////////////////////////////Transactions////////////////////////////////////
+  const [transactions, setTransactions] = useState([]);
+
+  const getTransactions = async () => {
+    const res = await fetch("http://localhost:8000/transactions/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    const new_data = data?.map((item) => {
+      const date = new Date(Date.parse(item.transaction_date)).toLocaleString(
+        "en-GB",
+        {
+          timeZone: "Africa/Nairobi",
+        }
+      );
+      return { ...item, date };
+    });
+    console.log(new_data);
+    setTransactions(new_data);
+  };
+
+  ///////////////////////////Paid Loans///////////////////////////////////////
+  const [paidLoans, setPaidLoans] = useState([]);
+
+  const getPaidLoans = async () => {
+    const res = await fetch("http://localhost:8000/transactions/paid", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const data = await res.json();
+    // change date format in the data
+    // if data exists
+    if (data.length > 0) {
+      const new_data = data?.map((item) => {
+        const date = new Date(Date.parse(item.transaction_date)).toDateString();
+        return { ...item, date };
+      });
+
+      setPaidLoans(new_data);
+    }
+  };
+
+  //////////////////////////////Pay Loan///////////////////////////////////////
+  const [showPaybillModal, setShowPaybillModal] = useState(false);
+  const [paidAmount, setPaidAmount] = useState(0);
+  const [selectedLoanId, setSelectedLoanId] = useState(0);
+  // const [paybillFormData, setPaybillFormData] = useState({
+  //   amount: "",
+  //   loan_id: 0,
+  // });
+
+  const handlePaybillSubmit = (e) => {
+    console.log({ paidAmount, selectedLoanId });
+
+    const res = fetch("http://localhost:8000/loans/pay", {
+      method: "PATCH",
+      body: JSON.stringify({ amount: paidAmount, loan_id: selectedLoanId }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log(res);
+    // alert("Payment Successful");
+    setShowPaybillModal(false);
+  };
+
+  // from userLoans extract loan_ids
+  const allLoan_ids = userLoans?.map((item) => item.loan_id);
 
   return (
     <Gcontext.Provider
@@ -265,6 +358,22 @@ export const GcontextProvider = (props) => {
         setGuarantor,
         handleLoanIds,
         Loan_ids,
+        getUserLoans,
+        userLoans,
+        getUserLoanDetails,
+        LoanDetails,
+        getTransactions,
+        transactions,
+        getPaidLoans,
+        paidLoans,
+        showPaybillModal,
+        setShowPaybillModal,
+        handlePaybillSubmit,
+        paidAmount,
+        setPaidAmount,
+        selectedLoanId,
+        setSelectedLoanId,
+        allLoan_ids,
       }}
     >
       {props.children}
