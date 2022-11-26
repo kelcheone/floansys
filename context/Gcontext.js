@@ -126,11 +126,6 @@ export const GcontextProvider = (props) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-
-    // if the request is successful
-
-    // const data = res.json();
-    // close the modal
     console.log(JSON.stringify(guarantor));
 
     setShowGuarantor(false);
@@ -156,7 +151,6 @@ export const GcontextProvider = (props) => {
       },
     });
 
-    // const data = await res.json();
     if (res.status !== 201 || !res) {
       window.alert("Invalid Registration");
       console.log("Invalid Registration");
@@ -265,7 +259,17 @@ export const GcontextProvider = (props) => {
       },
     });
     const data = await res.json();
-    setTransactions(data);
+    const new_data = data?.map((item) => {
+      const date = new Date(Date.parse(item.transaction_date)).toLocaleString(
+        "en-GB",
+        {
+          timeZone: "Africa/Nairobi",
+        }
+      );
+      return { ...item, date };
+    });
+    console.log(new_data);
+    setTransactions(new_data);
   };
 
   ///////////////////////////Paid Loans///////////////////////////////////////
@@ -290,7 +294,6 @@ export const GcontextProvider = (props) => {
       });
 
       setPaidLoans(new_data);
-      console.log(new_data);
     }
   };
 
