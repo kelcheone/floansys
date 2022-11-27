@@ -25,14 +25,13 @@ const Dashboard = () => {
   } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
 
-  useEffect(() => {
-    getActivePayments();
-    getDefaultedLoans();
-    getTotalLoans();
-    getPendingLoans();
-    getUnverifiedUsersCount();
-    getAllUsersCount();
-  }, []);
+  // useEffect(() => {
+  getActivePayments();
+  getDefaultedLoans();
+  getTotalLoans();
+  getPendingLoans();
+  getUnverifiedUsersCount();
+  getAllUsersCount();
 
   return (
     <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap md:min-h-full h-full bg-background w-screen">

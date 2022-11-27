@@ -14,8 +14,8 @@ let user_loan_history = {
 const UserContent = () => {
   const { userLoans, getUserLoanDetails, LoanDetails } = useContext(Gcontext);
   useEffect(() => {
-    const data = getUserLoanDetails();
-    console.log({ data });
+  const data = getUserLoanDetails();
+  console.log({ data });
   }, []);
 
   const handleClick = () => {

@@ -1,5 +1,3 @@
-// Handle authentication
-
 import { useRouter } from "next/router";
 import React, { createContext, useState, useEffect } from "react";
 import { parseJwt } from "../lib/utils";
@@ -543,6 +541,53 @@ export const GcontextProvider = (props) => {
     // route to view page
     router.push(`/dashboard/user/${user_id}`);
   };
+  const [viewUserDetails, setViewUserDetails] = useState({});
+  const [updateFormData, setUpdateFormData] = useState({
+    first_name: "",
+    last_name: "",
+    national_id: "",
+    phone_number: "",
+    email: "",
+    status: "",
+    role: "",
+    password: "",
+  });
+
+  const handleUpdateUser = async (e, user_id) => {
+    e.preventDefault();
+    if (
+      updateFormData.password == "" ||
+      updateFormData.first_name == "" ||
+      updateFormData.last_name == "" ||
+      updateFormData.national_id == "" ||
+      updateFormData.phone_number == "" ||
+      updateFormData.email == "" ||
+      updateFormData.status == "" ||
+      updateFormData.role == ""
+    ) {
+      alert("Please fill all fields");
+    } else {
+      console.log(updateFormData);
+      const res = await fetch(
+        `http://localhost:8000/admin/update-user-details/${user_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(updateFormData),
+        }
+      );
+      const data = await res.json();
+      if (data.message == "User updated successfully") {
+        alert("User updated successfully");
+        router.push("/dashboard/users");
+      } else {
+        alert(data.message);
+      }
+    }
+  };
 
   return (
     <Gcontext.Provider
@@ -617,6 +662,11 @@ export const GcontextProvider = (props) => {
         getAllUsers,
         allUsers,
         handleViewUser,
+        viewUserDetails,
+        setViewUserDetails,
+        updateFormData,
+        setUpdateFormData,
+        handleUpdateUser,
       }}
     >
       {props.children}
