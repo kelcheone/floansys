@@ -7,6 +7,8 @@ import Card from "../../components/Verify/Card";
 import { Gcontext } from "../../context/Gcontext";
 
 const Verify = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { getAllUnverifiedUsers } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
 

@@ -9,6 +9,8 @@ import Card from "../../components/Applications/Card";
 import { Gcontext } from "../../context/Gcontext";
 
 const Applications = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { pendingLoanApplications, getPendingLoanApplications } =
     useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);

@@ -6,6 +6,8 @@ import { Gcontext } from "../../context/Gcontext";
 // import from jose to decode token
 
 const User = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const {
     extractUserId,
     userDetails,

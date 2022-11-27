@@ -1,12 +1,11 @@
-// Log in form
-// styled with tailwindcss
-
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { Gcontext } from "../../context/Gcontext";
 
 const LogInForm = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { handleChangeLogin, handleLogin } = useContext(Gcontext);
 
   return (

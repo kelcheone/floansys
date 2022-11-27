@@ -7,6 +7,8 @@ import { Gcontext } from "../../context/Gcontext";
 import MyStatement from "../../components/User/LoanStatement/Statement";
 
 const Statement = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { handleLoanIds, getTransactions } = useContext(Gcontext);
 
   useEffect(() => {

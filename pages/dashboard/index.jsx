@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import MidCard from "../../components/DashBoard/MidCard";
@@ -12,6 +12,11 @@ import Users from "../../components/DashBoard/Users";
 import { Gcontext } from "../../context/Gcontext";
 
 const Dashboard = () => {
+  // use ref to count rerenders
+  const renderCount = useRef(0);
+  renderCount.current = renderCount.current + 1;
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const {
     getActivePayments,
     getDefaultedLoans,
@@ -84,12 +89,12 @@ const Dashboard = () => {
                 number={
                   Object.keys(unverifiedUsersCount).length > 0
                     ? unverifiedUsersCount.accounts
-                    : 0
+                    : "0"
                 }
                 color="bg-blue-500"
                 icon="bx bx-user"
                 smTitle="Total amount"
-                amount="445000"
+                amount="44400"
               />
               <Users
                 title="Total Users"
@@ -101,7 +106,7 @@ const Dashboard = () => {
                 color="bg-blue-500"
                 icon="bx bx-user"
                 smTitle="Total amount"
-                amount="445000"
+                amount="44400"
               />
             </SmCardRender>
           </div>

@@ -3,6 +3,8 @@ import React, { useContext, useState } from "react";
 import { Gcontext } from "../../context/Gcontext";
 
 const SignupForm = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { handleChange, handleSignup } = useContext(Gcontext);
 
   return (

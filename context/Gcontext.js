@@ -1,5 +1,3 @@
-// Handle authentication
-
 import { useRouter } from "next/router";
 import React, { createContext, useState, useEffect } from "react";
 import { parseJwt } from "../lib/utils";
@@ -183,11 +181,14 @@ export const GcontextProvider = (props) => {
       // decode token and redirect to user with user id
       try {
         const decoded = parseJwt(token);
+        if (decoded.role === "user") {
+          router.push(`/user`);
+        } else if (decoded.role === "admin") {
+          router.push(`/dashboard`);
+        }
       } catch (err) {
         throw new Error("Invalid token");
       }
-
-      router.push("/user");
     } else {
       alert("Bad credentials");
     }
@@ -543,7 +544,57 @@ export const GcontextProvider = (props) => {
     // route to view page
     router.push(`/dashboard/user/${user_id}`);
   };
+  const [viewUserDetails, setViewUserDetails] = useState({});
+  const [updateFormData, setUpdateFormData] = useState({
+    first_name: "",
+    last_name: "",
+    national_id: "",
+    phone_number: "",
+    email: "",
+    status: "",
+    role: "",
+    password: "",
+  });
 
+  const handleUpdateUser = async (e, user_id) => {
+    e.preventDefault();
+    if (
+      updateFormData.password == "" ||
+      updateFormData.first_name == "" ||
+      updateFormData.last_name == "" ||
+      updateFormData.national_id == "" ||
+      updateFormData.phone_number == "" ||
+      updateFormData.email == "" ||
+      updateFormData.status == "" ||
+      updateFormData.role == ""
+    ) {
+      alert("Please fill all fields");
+    } else {
+      console.log(updateFormData);
+      const res = await fetch(
+        `http://localhost:8000/admin/update-user-details/${user_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(updateFormData),
+        }
+      );
+      const data = await res.json();
+      if (data.message == "User updated successfully") {
+        alert("User updated successfully");
+        router.push("/dashboard/users");
+      } else {
+        alert(data.message);
+      }
+    }
+  };
+
+  const handleViewLoan = (loan_id) => {
+    router.push(`/dashboard/loan/${loan_id}`);
+  };
   return (
     <Gcontext.Provider
       value={{
@@ -617,6 +668,12 @@ export const GcontextProvider = (props) => {
         getAllUsers,
         allUsers,
         handleViewUser,
+        viewUserDetails,
+        setViewUserDetails,
+        updateFormData,
+        setUpdateFormData,
+        handleUpdateUser,
+        handleViewLoan,
       }}
     >
       {props.children}

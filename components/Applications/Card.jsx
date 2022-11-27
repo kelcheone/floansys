@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { Gcontext } from "../../context/Gcontext";
 
 const Card = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const {
     pendingLoanApplications,
     getPendingLoanApplications,

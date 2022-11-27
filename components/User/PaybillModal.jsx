@@ -9,6 +9,8 @@ import { useContext } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 const PaybillModal = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const {
     handlePaybillSubmit,
     showPaybillModal,

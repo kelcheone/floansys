@@ -5,6 +5,8 @@ import { GoPrimitiveDot } from "react-icons/go";
 import { Gcontext } from "../../context/Gcontext";
 
 const SummaryCard = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { activePayments, defaultedLoans } = useContext(Gcontext);
   return (
     <div className="flex flex-col items-center justify-center bg-white rounded-lg shadow-lg p-4 w-full h-full">

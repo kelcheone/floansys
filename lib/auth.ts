@@ -23,7 +23,7 @@ export async function verifyAuth(req: NextRequest) {
       token,
       new TextEncoder().encode(getJwtSecretKey())
     )
-    return verified.payload as UserJwtPayload
+    return verified.payload 
   } catch (err) {
     throw new AuthError('Your token has expired.')
   }
