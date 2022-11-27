@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import MidCard from "../../components/DashBoard/MidCard";
@@ -9,9 +9,30 @@ import SmCardRender from "../../components/DashBoard/SmCardRender";
 import Applications from "../../components/DashBoard/Applications";
 import Verified from "../../components/DashBoard/Verified";
 import Users from "../../components/DashBoard/Users";
+import { Gcontext } from "../../context/Gcontext";
 
 const Dashboard = () => {
+  const {
+    getActivePayments,
+    getDefaultedLoans,
+    getTotalLoans,
+    getPendingLoans,
+    getUnverifiedUsersCount,
+    getAllUsersCount,
+    unverifiedUsersCount,
+    pendingLoans,
+    allUsersCount,
+  } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    getActivePayments();
+    getDefaultedLoans();
+    getTotalLoans();
+    getPendingLoans();
+    getUnverifiedUsersCount();
+    getAllUsersCount();
+  }, []);
 
   return (
     <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap md:min-h-full h-full bg-background w-screen">
@@ -44,15 +65,27 @@ const Dashboard = () => {
             <SmCardRender>
               <Applications
                 title="Applications"
-                number="66"
+                number={
+                  Object.keys(pendingLoans).length > 0
+                    ? pendingLoans.accounts
+                    : 0
+                }
                 color="bg-blue-500"
                 icon="bx bx-user"
                 smTitle="Total amount"
-                amount="445000"
+                amount={
+                  Object.keys(pendingLoans).length > 0
+                    ? pendingLoans.total_amount
+                    : 0
+                }
               />
               <Verified
                 title="Unverified Users"
-                number="34"
+                number={
+                  Object.keys(unverifiedUsersCount).length > 0
+                    ? unverifiedUsersCount.accounts
+                    : 0
+                }
                 color="bg-blue-500"
                 icon="bx bx-user"
                 smTitle="Total amount"
@@ -60,7 +93,11 @@ const Dashboard = () => {
               />
               <Users
                 title="Total Users"
-                number="234"
+                number={
+                  Object.keys(allUsersCount).length > 0
+                    ? allUsersCount.accounts
+                    : 0
+                }
                 color="bg-blue-500"
                 icon="bx bx-user"
                 smTitle="Total amount"

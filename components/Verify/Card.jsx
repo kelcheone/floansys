@@ -1,31 +1,19 @@
-
-
-
-let users = [
-  {
-    UID: 234,
-    name: "Maxwell Lemasi",
-    profileStatus: "77%",
-  },
-  {
-    UID: 235,
-    name: "Sanders Gate",
-    profileStatus: "34%",
-  },
-  {
-    UID: 236,
-    name: "John Doe",
-    profileStatus: "100%",
-  },
-];
+import { useContext } from "react";
+import { Gcontext } from "../../context/Gcontext";
 
 const Card = () => {
+  const {
+    AllUnverifiedUsers,
+    handleVerifyUser,
+    handleVerifyAllUsers,
+    handleRejectVerification,
+  } = useContext(Gcontext);
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
       <div className="flex items-center justify-between w-full p-4">
         <h1 className="text-2xl font-bold">Verify Users</h1>
         <button
-          onClick={() => console.log("Verified all")}
+          onClick={() => handleVerifyAllUsers()}
           className="flex items-center justify-center w-32 h-10 bg-black rounded-lg text-white"
         >
           Verify All
@@ -43,23 +31,40 @@ const Card = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr className="border-b-2 border-gray-300 text-center">
-                <td className="p-2">{user.UID}</td>
-                <td className="p-2">{user.name}</td>
-                <td className="p-2">{user.profileStatus} complete.</td>
-                <td className="p-2">
-                  <button className="flex items-center justify-center w-32 h-10 bg-blue-500 rounded-lg text-white">
-                    Verify
-                  </button>
-                </td>
-                <td className="p-2">
-                  <button className="flex items-center justify-center w-32 h-10 bg-red-500 rounded-lg text-white">
-                    Reject
-                  </button>
-                </td>
+            {AllUnverifiedUsers && AllUnverifiedUsers.length > 0 ? (
+              AllUnverifiedUsers.map((unverifiedUser) => (
+                <tr
+                  key={unverifiedUser.user_id}
+                  className="border-b-2 border-gray-300"
+                >
+                  <td className="p-2">{unverifiedUser.user_id}</td>
+                  <td className="p-2">{unverifiedUser.name}</td>
+                  <td className="p-2">{unverifiedUser.profile_completed}</td>
+                  <td className="p-2">
+                    <button
+                      onClick={() => handleVerifyUser(unverifiedUser.user_id)}
+                      className="flex items-center justify-center w-20 h-10 bg-black rounded-lg text-white"
+                    >
+                      Verify
+                    </button>
+                  </td>
+                  <td className="p-2">
+                    <button
+                      onClick={() =>
+                        handleRejectVerification(unverifiedUser.user_id)
+                      }
+                      className="flex items-center justify-center w-20 h-10 bg-black rounded-lg text-white"
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className="border-b-2 border-gray-300">
+                <td className="p-2">No unverified users</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

@@ -1,19 +1,20 @@
 // Style with tailwindcss
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 import SideBar from "../../components/DashBoard/SideBar";
 import Card from "../../components/Users/Card";
-
-// UID
-// Name
-// Borrowed
-// Paid
-// Status
+import { Gcontext } from "../../context/Gcontext";
 
 const Users = () => {
+  const { getPendingLoanApplications, getAllUsers } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    getPendingLoanApplications();
+    getAllUsers();
+  }, []);
 
   return (
     <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap md:min-h-full h-full bg-background w-screen">
