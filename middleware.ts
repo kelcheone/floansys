@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { verifyAuth } from "./lib/auth";
 
 export const config = {
-  matcher: ["/user", "/dashboard", "/user/statement", "/user/addloan"],
+  matcher: ["/user/:path*", "/dashboard/:path*"]
 };
 
 export async function middleware(req: NextRequest) {
@@ -25,4 +25,11 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
   }
+
+  // The dashboard is only accessible to admins else redirect to the home page
+  if (req.nextUrl.pathname.startsWith("/dashboard") && (verifiedToken.role !== "admin")){
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+  
+  
 }

@@ -8,6 +8,8 @@ import Card from "../../components/Users/Card";
 import { Gcontext } from "../../context/Gcontext";
 
 const Users = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { getPendingLoanApplications, getAllUsers } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
 

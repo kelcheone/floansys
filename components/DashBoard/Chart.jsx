@@ -6,6 +6,8 @@ import { Doughnut } from "react-chartjs-2";
 ChartJs.register(Tooltip, Title, ArcElement, Legend);
 
 const Chart = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { activePayments, defaultedLoans } = useContext(Gcontext);
   return (
     <div>

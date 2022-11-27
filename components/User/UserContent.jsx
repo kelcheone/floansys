@@ -12,10 +12,12 @@ let user_loan_history = {
 };
 
 const UserContent = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { userLoans, getUserLoanDetails, LoanDetails } = useContext(Gcontext);
   useEffect(() => {
-  const data = getUserLoanDetails();
-  console.log({ data });
+    const data = getUserLoanDetails();
+    console.log({ data });
   }, []);
 
   const handleClick = () => {

@@ -5,6 +5,8 @@ import { useContext } from "react";
 import { Gcontext } from "../../context/Gcontext";
 
 const TableCard = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { viewUserDetails, handleViewLoan } = useContext(Gcontext);
   return (
     // scrollable table div

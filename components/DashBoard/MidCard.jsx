@@ -4,6 +4,8 @@ import Dropdown from "./Dropdown";
 import { Gcontext } from "../../context/Gcontext";
 
 const MidCard = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { totalLoans } = useContext(Gcontext);
   return (
     <div className="flex flex-col items-center justify-center bg-white rounded-lg shadow-lg p-4 mb-8 w-full">

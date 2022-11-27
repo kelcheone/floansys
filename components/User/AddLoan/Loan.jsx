@@ -6,6 +6,8 @@ import { Gcontext } from "../../../context/Gcontext";
 import { useContext } from "react";
 
 const Loan = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const {
     showGurantor,
     setShowGuarantor,

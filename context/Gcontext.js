@@ -181,11 +181,14 @@ export const GcontextProvider = (props) => {
       // decode token and redirect to user with user id
       try {
         const decoded = parseJwt(token);
+        if (decoded.role === "user") {
+          router.push(`/user`);
+        } else if (decoded.role === "admin") {
+          router.push(`/dashboard`);
+        }
       } catch (err) {
         throw new Error("Invalid token");
       }
-
-      router.push("/user");
     } else {
       alert("Bad credentials");
     }

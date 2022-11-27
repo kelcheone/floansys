@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import Loan from "../../components/User/AddLoan/Loan";
 import { Gcontext } from "../../context/Gcontext";
 const AddLoan = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { handleLoanIds } = useContext(Gcontext);
 
   useEffect(() => {

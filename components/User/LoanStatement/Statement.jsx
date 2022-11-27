@@ -36,6 +36,8 @@ let data = [
 ];
 
 const MyStatement = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { transactions } = useContext(Gcontext);
   return (
     <div className="flex flex-col items-center justify-center w-full h-full m-7 bg-green-500">

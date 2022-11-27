@@ -6,6 +6,8 @@ import PaybillModal from "./PaybillModal";
 import Image from "next/image";
 
 const SideBar = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const {
     user,
     paidLoans,

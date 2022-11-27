@@ -4,6 +4,8 @@ import { AiOutlineArrowDown } from "react-icons/ai";
 import { Gcontext } from "../../../context/Gcontext";
 
 const GuarantorModal = ({ show, setShow }) => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const {
     showLoanId,
     setShowLoanId,

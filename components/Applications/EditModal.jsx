@@ -15,6 +15,8 @@ password
  */
 
 const EditModal = ({ user, show, setShow }) => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const {
     updateFormData,
     setUpdateFormData,

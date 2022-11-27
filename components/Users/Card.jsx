@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { Gcontext } from "../../context/Gcontext";
 
 const Card = () => {
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { allUsers, handleViewUser } = useContext(Gcontext);
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">

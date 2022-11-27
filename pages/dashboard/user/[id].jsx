@@ -6,6 +6,8 @@ import EditModal from "../../../components/Applications/EditModal";
 
 const id = () => {
   const [showModal, setShowModal] = useState(false);
+  const timeout = () => setTimeout(() => console.log, 400);
+  timeout();
   const { setViewUserDetails } = useContext(Gcontext);
   const router = useRouter();
   const { id } = router.query;
