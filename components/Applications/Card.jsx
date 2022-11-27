@@ -1,55 +1,17 @@
-import { useState } from "react";
-import EditModal from "./EditModal";
-import AddUser from "./AddUser";
-
-let users = [
-  {
-    UID: 1,
-    name: "John Doe",
-    amount: "100000",
-    intrestRate: "10%",
-    guarantors: "2",
-  },
-  {
-    UID: 2,
-    name: "Mark Oj",
-    amount: "197000",
-    intrestRate: "3.4%",
-    guarantors: "1",
-  },
-  {
-    UID: 3,
-    name: "Vicky Oj",
-    amount: "23450",
-    intrestRate: "5.4%",
-    guarantors: "3",
-  },
-];
+import { useContext } from "react";
+import { Gcontext } from "../../context/Gcontext";
 
 const Card = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [showAddUser, setShowAddUser] = useState(false);
-  const [options, setOptions] = useState(["Edit", "Delete"]);
-  const [selected, setSelected] = useState("Edit");
-  const toggle = () => setIsOpen(!isOpen);
-  const handleSelect = (e) => {
-    if (e.target.value === "Edit") {
-      setShowModal(true);
-    } else {
-      console.log("Delete");
-    }
-  };
+  const {
+    pendingLoanApplications,
+    getPendingLoanApplications,
+    handleApproveLoan,
+    handleRejectLoan,
+  } = useContext(Gcontext);
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full h-full">
       <div className="flex items-center justify-between w-full p-4">
         <h1 className="text-2xl font-bold">Users</h1>
-        <button
-          onClick={() => setShowAddUser(true)}
-          className="flex items-center justify-center w-32 h-10 bg-black rounded-lg text-white"
-        >
-          Add User
-        </button>
       </div>
       <div className="flex flex-col items-center justify-center w-full h-full">
         <table className="w-full">
@@ -66,36 +28,44 @@ const Card = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr className="border-b-2 border-gray-300 text-center">
-                <td className="p-2">{user.UID}</td>
-                <td className="p-2">{user.name}</td>
-                <td className="p-2">{user.amount}</td>
-                <td className="p-2">{user.intrestRate}</td>
-                <td className="p-2">{user.guarantors}</td>
-                <td className="p-2">
-                  <button
-                    onClick={() => setShowModal(true)}
-                    className="flex items-center justify-center w-32 h-10 bg-green-500 rounded-lg text-white"
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td className="p-2">
-                  <button
-                    onClick={() => console.log("Delete")}
-                    className="flex items-center justify-center w-32 h-10 bg-red-500 rounded-lg text-white"
-                  >
-                    Delete
-                  </button>
-                </td>
+            {/* check if pending loans exits then loop else display no table */}
+            {pendingLoanApplications.length > 0 ? (
+              pendingLoanApplications.map((application) => (
+                <tr
+                  key={application.loan_id}
+                  className="border-b-2 border-gray-300"
+                >
+                  <td className="p-2">{application.loan_id}</td>
+                  <td className="p-2">{application.user_name}</td>
+                  <td className="p-2">{application.amount}</td>
+                  <td className="p-2">{application.interest}</td>
+                  <td className="p-2">{application.guarantors}</td>
+                  <td className="p-2">
+                    <button
+                      onClick={() => handleApproveLoan(application.loan_id)}
+                      className="flex items-center justify-center w-32 h-10 bg-black rounded-lg text-white"
+                    >
+                      Approve
+                    </button>
+                  </td>
+                  <td className="p-2">
+                    <button
+                      onClick={() => handleRejectLoan(application.loan_id)}
+                      className="flex items-center justify-center w-32 h-10 bg-red-400 rounded-lg text-white"
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className="border-b-2 border-gray-300">
+                <td className="p-2">No pending loan applications</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
-      <AddUser showAddUser={showAddUser} setShowAddUser={setShowAddUser} />
-      <EditModal show={showModal} setShow={setShowModal} user={users[0]} />
     </div>
   );
 };

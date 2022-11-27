@@ -325,6 +325,225 @@ export const GcontextProvider = (props) => {
   // from userLoans extract loan_ids
   const allLoan_ids = userLoans?.map((item) => item.loan_id);
 
+  //////////////////////////ADMIN OPERATIONS///////////////////////////////////
+  const [activePayments, setActivePayments] = useState({
+    accounts: 0,
+    total_amount: 0,
+  });
+  user;
+
+  const getActivePayments = async () => {
+    const res = await fetch("http://localhost:8000/admin/active-users-count", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setActivePayments(data);
+  };
+
+  const [defaultedLoans, setDefaultedLoans] = useState({
+    accounts: 0,
+    total_amount: 0,
+  });
+
+  const getDefaultedLoans = async () => {
+    const res = await fetch(
+      "http://localhost:8000/admin/defaulted-users-count",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+    setDefaultedLoans(data);
+  };
+
+  const [totalLoans, setTotalLoans] = useState({
+    accounts: 0,
+    total_amount: 0,
+  });
+
+  const getTotalLoans = async () => {
+    const res = await fetch("http://localhost:8000/admin/all-loans-count", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setTotalLoans(data);
+  };
+
+  const [pendingLoans, setPendingLoans] = useState({
+    accounts: 0,
+    total_amount: 0,
+  });
+  const getPendingLoans = async () => {
+    const res = await fetch("http://localhost:8000/admin/pending-count", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setPendingLoans(data);
+  };
+
+  const [unverifiedUsersCount, setUnverifiedUsersCount] = useState({
+    accounts: 0,
+  });
+
+  const getUnverifiedUsersCount = async () => {
+    const res = await fetch("http://localhost:8000/admin/unverified-count", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setUnverifiedUsersCount(data);
+  };
+
+  const [allUsersCount, setAllUsersCount] = useState({ accounts: 0 });
+
+  const getAllUsersCount = async () => {
+    const res = await fetch("http://localhost:8000/admin/all-users-count", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setAllUsersCount(data);
+  };
+
+  const [pendingLoanApplications, setPendingLoanApplications] = useState([]);
+  const getPendingLoanApplications = async () => {
+    const res = await fetch("http://localhost:8000/admin/pending-loans", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setPendingLoanApplications(data);
+  };
+
+  const handleApproveLoan = async (loan_id) => {
+    const res = await fetch(
+      `http://localhost:8000/admin/approve-loan/${loan_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const data = await res.json();
+  };
+
+  const handleRejectLoan = async (loan_id) => {
+    const res = await fetch(
+      `http://localhost:8000/admin/reject-loan/${loan_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const data = await res.json();
+  };
+
+  const [AllUnverifiedUsers, setAllUnverifiedUsers] = useState([]);
+
+  const getAllUnverifiedUsers = async () => {
+    const res = await fetch(
+      "http://localhost:8000/admin/all-unverified-users",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const data = await res.json();
+    console.log(data);
+    setAllUnverifiedUsers(data);
+  };
+
+  const handleVerifyUser = async (user_id) => {
+    const res = await fetch(
+      `http://localhost:8000/admin/verify-user/${user_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const data = await res.json();
+  };
+
+  const handleVerifyAllUsers = async () => {
+    const res = await fetch("http://localhost:8000/admin/verify-all-users", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+  };
+
+  const handleRejectVerification = async (user_id) => {
+    const res = await fetch(
+      `http://localhost:8000/admin/reject-verification/${user_id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const data = await res.json();
+  };
+  const [allUsers, setAllUsers] = useState([]);
+
+  const getAllUsers = async () => {
+    const res = await fetch("http://localhost:8000/admin/all-users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setAllUsers(data);
+  };
+
+  const handleViewUser = async (user_id) => {
+    // route to view page
+    router.push(`/dashboard/user/${user_id}`);
+  };
+
   return (
     <Gcontext.Provider
       value={{
@@ -374,6 +593,30 @@ export const GcontextProvider = (props) => {
         selectedLoanId,
         setSelectedLoanId,
         allLoan_ids,
+        getActivePayments,
+        activePayments,
+        getDefaultedLoans,
+        defaultedLoans,
+        getTotalLoans,
+        totalLoans,
+        getPendingLoans,
+        pendingLoans,
+        getUnverifiedUsersCount,
+        unverifiedUsersCount,
+        getAllUsersCount,
+        allUsersCount,
+        getPendingLoanApplications,
+        pendingLoanApplications,
+        handleApproveLoan,
+        handleRejectLoan,
+        getAllUnverifiedUsers,
+        AllUnverifiedUsers,
+        handleVerifyUser,
+        handleVerifyAllUsers,
+        handleRejectVerification,
+        getAllUsers,
+        allUsers,
+        handleViewUser,
       }}
     >
       {props.children}

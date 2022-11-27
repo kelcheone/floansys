@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Gcontext } from "../../context/Gcontext";
 
 import { Chart as ChartJs, Tooltip, Title, ArcElement, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 ChartJs.register(Tooltip, Title, ArcElement, Legend);
 
 const Chart = () => {
+  const { activePayments, defaultedLoans } = useContext(Gcontext);
   return (
     <div>
       <Doughnut
@@ -13,7 +15,14 @@ const Chart = () => {
           datasets: [
             {
               label: "Active Payments",
-              data: [12, 19],
+              data: [
+                Object.keys(activePayments).length > 0
+                  ? activePayments.accounts
+                  : 0,
+                Object.keys(defaultedLoans).length > 0
+                  ? defaultedLoans.accounts
+                  : 0,
+              ],
               backgroundColor: ["#34D399", "#FBBF24"],
               hoverOffset: 4,
             },

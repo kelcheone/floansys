@@ -1,16 +1,23 @@
 // Style with tailwindcss
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 import SideBar from "../../components/DashBoard/SideBar";
 import Card from "../../components/Applications/Card";
 
+import { Gcontext } from "../../context/Gcontext";
+
 const Applications = () => {
+  const { pendingLoanApplications, getPendingLoanApplications } =
+    useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
+  useEffect(() => {
+    getPendingLoanApplications();
+  }, []);
 
   return (
-    <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap md:min-h-full h-full bg-background w-screen">
+    <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap md:min-h-full min-h-screen h-full bg-background w-screen">
       <div
         onClick={() => setShowSidebar(!showSidebar)}
         className="flex items-center justify-center w-12 h-12 bg-black md:hidden rounded-[100000px] p-3 mt-4 ml-2 mr-2 cursor-pointer"
