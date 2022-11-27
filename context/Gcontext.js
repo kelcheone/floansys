@@ -589,6 +589,9 @@ export const GcontextProvider = (props) => {
     }
   };
 
+  const handleViewLoan = (loan_id) => {
+    router.push(`/dashboard/loan/${loan_id}`);
+  };
   return (
     <Gcontext.Provider
       value={{
@@ -667,6 +670,7 @@ export const GcontextProvider = (props) => {
         updateFormData,
         setUpdateFormData,
         handleUpdateUser,
+        handleViewLoan,
       }}
     >
       {props.children}

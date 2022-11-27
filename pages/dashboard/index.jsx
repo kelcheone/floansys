@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import MidCard from "../../components/DashBoard/MidCard";
@@ -12,6 +12,10 @@ import Users from "../../components/DashBoard/Users";
 import { Gcontext } from "../../context/Gcontext";
 
 const Dashboard = () => {
+  // use ref to count rerenders
+  const renderCount = useRef(0);
+  renderCount.current = renderCount.current + 1;
+  console.log("Dashboard rerenders: ", renderCount.current);
   const {
     getActivePayments,
     getDefaultedLoans,
@@ -25,13 +29,14 @@ const Dashboard = () => {
   } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
 
-  // useEffect(() => {
-  getActivePayments();
-  getDefaultedLoans();
-  getTotalLoans();
-  getPendingLoans();
-  getUnverifiedUsersCount();
-  getAllUsersCount();
+  useEffect(() => {
+    getActivePayments();
+    getDefaultedLoans();
+    getTotalLoans();
+    getPendingLoans();
+    getUnverifiedUsersCount();
+    getAllUsersCount();
+  }, []);
 
   return (
     <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap md:min-h-full h-full bg-background w-screen">
