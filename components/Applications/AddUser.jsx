@@ -12,7 +12,6 @@ const AddUser = ({ showAddUser, setShowAddUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(firstName, lastName, email, phone, password, role);
   };
 
   return (

@@ -18,14 +18,12 @@ const Loan = () => {
     });
     const data = await res.json();
     setData(data);
-    console.log(data);
   };
 
   useEffect(
     () => {
       if (!router.isReady) return;
       handleLoan(id);
-      console.log(id);
     },
     [id],
     router.isReady

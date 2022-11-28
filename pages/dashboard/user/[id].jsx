@@ -17,14 +17,12 @@ const Id = () => {
   const handleUserDetails = async () => {
     const res = await fetch(`${URL}/admin/all-user-details/${id}`);
     const data = await res.json();
-    console.log(data);
     setUser(data);
     setViewUserDetails(data);
   };
 
   useEffect(() => {
     if (!router.isReady) return;
-    console.log(id);
     handleUserDetails();
   }, [id, router.isReady]);
   return (
@@ -36,7 +34,6 @@ const Id = () => {
         <div className="text-black text-2xl font-bold">{user.status}</div>
         <button
           onClick={() => {
-            console.log("clicked");
             setShowModal(true);
           }}
           className="bg-black text-white px-4 py-2 rounded-lg"

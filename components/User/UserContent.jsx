@@ -17,12 +17,10 @@ const UserContent = () => {
   const { userLoans, getUserLoanDetails, LoanDetails } = useContext(Gcontext);
   useEffect(() => {
     const data = getUserLoanDetails();
-    console.log({ data });
   }, []);
 
   const handleClick = () => {
     // link to add loan page
-    console.log("clicked");
     return (
       <Link
         href={{

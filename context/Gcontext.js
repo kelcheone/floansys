@@ -56,7 +56,6 @@ export const GcontextProvider = (props) => {
       interest: parseFloat(loanFormData.interest),
       due_date: loanFormData.due_date,
     };
-    console.log(JSON.stringify(newObject));
     const res = await fetch(loanUrl, {
       method: "POST",
       // convert amount and interest to float
@@ -126,7 +125,6 @@ export const GcontextProvider = (props) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log(JSON.stringify(guarantor));
 
     setShowGuarantor(false);
   };
@@ -141,7 +139,6 @@ export const GcontextProvider = (props) => {
   // handle signup
   const handleSignup = async (e) => {
     e.preventDefault();
-    console.log(FormData);
 
     const res = await fetch(`${base_url}/signup`, {
       method: "POST",
@@ -153,17 +150,14 @@ export const GcontextProvider = (props) => {
 
     if (res.status !== 201 || !res) {
       window.alert("Invalid Registration");
-      console.log("Invalid Registration");
     } else {
       window.alert("Registration Successful");
-      console.log("Registration Successful");
       router.push("/auth/login");
     }
   };
 
   async function handleLogin(e) {
     e.preventDefault();
-    console.log(loginData);
     const res = await fetch(`${base_url}/signin`, {
       method: "POST",
       body: JSON.stringify(loginData),
@@ -274,7 +268,6 @@ export const GcontextProvider = (props) => {
         return { ...item, date };
       });
     }
-    console.log(new_data);
     setTransactions(new_data);
   };
 
@@ -313,7 +306,6 @@ export const GcontextProvider = (props) => {
   // });
 
   const handlePaybillSubmit = (e) => {
-    console.log({ paidAmount, selectedLoanId });
 
     const res = fetch(`${URL}/loans/pay`, {
       method: "PATCH",
@@ -323,7 +315,6 @@ export const GcontextProvider = (props) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log(res);
     // alert("Payment Successful");
     setShowPaybillModal(false);
   };
@@ -480,7 +471,6 @@ export const GcontextProvider = (props) => {
       },
     });
     const data = await res.json();
-    console.log(data);
     setAllUnverifiedUsers(data);
   };
 
@@ -560,7 +550,6 @@ export const GcontextProvider = (props) => {
     ) {
       alert("Please fill all fields");
     } else {
-      console.log(updateFormData);
       const res = await fetch(`${URL}/admin/update-user-details/${user_id}`, {
         method: "PUT",
         headers: {

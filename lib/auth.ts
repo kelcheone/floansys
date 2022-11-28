@@ -21,13 +21,11 @@ export async function verifyAuth(req: NextRequest) {
     token,
     new TextEncoder().encode(getJwtSecretKey())
   )
-  console.log("v_token", v_token)
   try {
     const verified = await jwtVerify(
       token,
       new TextEncoder().encode(getJwtSecretKey())
     )
-    console.log('verified', verified)
     return verified.payload 
 
   } catch (err) {
