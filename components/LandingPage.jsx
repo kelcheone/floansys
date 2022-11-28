@@ -30,7 +30,12 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="flex justify-center items-center md:w-1/2">
-        <Image src="/assets/loanapplication.webp" width={500} height={500} />
+        <Image
+          src="/assets/loanapplication.webp"
+          alt="Hero image"
+          width={500}
+          height={500}
+        />
       </div>
     </div>
   );

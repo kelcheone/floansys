@@ -14,11 +14,8 @@ export async function middleware(req: NextRequest) {
 
   if (!verifiedToken) {
     // if this an API request, respond with JSON
-    if (req.nextUrl.pathname.startsWith("/api/")) {
-      return new NextResponse(
-        JSON.stringify({ error: { message: "authentication required" } }),
-        { status: 401 }
-      );
+    if (req.nextUrl.pathname.startsWith("/dashboard/") || req.nextUrl.pathname.startsWith("/user/")) {
+      return NextResponse.redirect(new URL("/auth/login", req.nextUrl.origin).href);
     }
     // otherwise, redirect to the set token page
     else {
@@ -30,6 +27,7 @@ export async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith("/dashboard") && (verifiedToken.role !== "admin")){
     return NextResponse.redirect(new URL("/", req.url));
   }
+  
   
   
 }

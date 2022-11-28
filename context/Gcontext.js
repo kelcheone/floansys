@@ -4,8 +4,10 @@ import { parseJwt } from "../lib/utils";
 
 export const Gcontext = createContext();
 
-let base_url = "http://localhost:8000/auth";
-const loanUrl = "http://localhost:8000/loans";
+const URL = process.env.NEXT_PUBLIC_API_URL;
+
+let base_url = `${URL}/auth`;
+const loanUrl = `${URL}/loans`;
 
 export const GcontextProvider = (props) => {
   const [user, setUser] = useState(null);
@@ -99,7 +101,7 @@ export const GcontextProvider = (props) => {
 
   // Get loan_ids without guarantors
   const handleLoanIds = async () => {
-    const res = await fetch("http://localhost:8000/guarantors/no", {
+    const res = await fetch(`${URL}/guarantors/no`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +118,7 @@ export const GcontextProvider = (props) => {
   const handleSubmitGuarantorForm = (e) => {
     e.preventDefault();
     // send the request to the server
-    const res = fetch("http://localhost:8000/guarantors", {
+    const res = fetch(`${URL}/guarantors`, {
       method: "POST",
       body: JSON.stringify(guarantor),
       headers: {
@@ -205,7 +207,7 @@ export const GcontextProvider = (props) => {
   };
 
   const userDetails = async () => {
-    const res = await fetch("http://localhost:8000/users/me", {
+    const res = await fetch(`${URL}/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -220,7 +222,7 @@ export const GcontextProvider = (props) => {
   const [userLoans, setUserLoans] = useState([]);
 
   const getUserLoans = async () => {
-    const res = await fetch("http://localhost:8000/loans/my-loans", {
+    const res = await fetch(`${URL}/loans/my-loans`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -235,7 +237,7 @@ export const GcontextProvider = (props) => {
   const [LoanDetails, setLoanDetatils] = useState([]);
 
   const getUserLoanDetails = async () => {
-    const res = await fetch("http://localhost:8000/loans/details", {
+    const res = await fetch(`${URL}/loans/details`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -252,7 +254,7 @@ export const GcontextProvider = (props) => {
   const [transactions, setTransactions] = useState([]);
 
   const getTransactions = async () => {
-    const res = await fetch("http://localhost:8000/transactions/me", {
+    const res = await fetch(`${URL}/transactions/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -260,15 +262,18 @@ export const GcontextProvider = (props) => {
       },
     });
     const data = await res.json();
-    const new_data = data?.map((item) => {
-      const date = new Date(Date.parse(item.transaction_date)).toLocaleString(
-        "en-GB",
-        {
-          timeZone: "Africa/Nairobi",
-        }
-      );
-      return { ...item, date };
-    });
+    let new_data;
+    if (data.length > 0) {
+      new_data = data?.map((item) => {
+        const date = new Date(Date.parse(item.transaction_date)).toLocaleString(
+          "en-GB",
+          {
+            timeZone: "Africa/Nairobi",
+          }
+        );
+        return { ...item, date };
+      });
+    }
     console.log(new_data);
     setTransactions(new_data);
   };
@@ -277,7 +282,7 @@ export const GcontextProvider = (props) => {
   const [paidLoans, setPaidLoans] = useState([]);
 
   const getPaidLoans = async () => {
-    const res = await fetch("http://localhost:8000/transactions/paid", {
+    const res = await fetch(`${URL}/transactions/paid`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -310,7 +315,7 @@ export const GcontextProvider = (props) => {
   const handlePaybillSubmit = (e) => {
     console.log({ paidAmount, selectedLoanId });
 
-    const res = fetch("http://localhost:8000/loans/pay", {
+    const res = fetch(`${URL}/loans/pay`, {
       method: "PATCH",
       body: JSON.stringify({ amount: paidAmount, loan_id: selectedLoanId }),
       headers: {
@@ -324,7 +329,10 @@ export const GcontextProvider = (props) => {
   };
 
   // from userLoans extract loan_ids
-  const allLoan_ids = userLoans?.map((item) => item.loan_id);
+  let allLoan_ids;
+  if (userLoans.length > 0) {
+    allLoan_ids = userLoans?.map((item) => item.loan_id);
+  }
 
   //////////////////////////ADMIN OPERATIONS///////////////////////////////////
   const [activePayments, setActivePayments] = useState({
@@ -334,7 +342,7 @@ export const GcontextProvider = (props) => {
   user;
 
   const getActivePayments = async () => {
-    const res = await fetch("http://localhost:8000/admin/active-users-count", {
+    const res = await fetch(`${URL}/admin/active-users-count`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -351,16 +359,13 @@ export const GcontextProvider = (props) => {
   });
 
   const getDefaultedLoans = async () => {
-    const res = await fetch(
-      "http://localhost:8000/admin/defaulted-users-count",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const res = await fetch(`${URL}/admin/defaulted-users-count`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
 
     const data = await res.json();
     setDefaultedLoans(data);
@@ -372,7 +377,7 @@ export const GcontextProvider = (props) => {
   });
 
   const getTotalLoans = async () => {
-    const res = await fetch("http://localhost:8000/admin/all-loans-count", {
+    const res = await fetch(`${URL}/admin/all-loans-count`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -388,7 +393,7 @@ export const GcontextProvider = (props) => {
     total_amount: 0,
   });
   const getPendingLoans = async () => {
-    const res = await fetch("http://localhost:8000/admin/pending-count", {
+    const res = await fetch(`${URL}/admin/pending-count`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -404,7 +409,7 @@ export const GcontextProvider = (props) => {
   });
 
   const getUnverifiedUsersCount = async () => {
-    const res = await fetch("http://localhost:8000/admin/unverified-count", {
+    const res = await fetch(`${URL}/admin/unverified-count`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -418,7 +423,7 @@ export const GcontextProvider = (props) => {
   const [allUsersCount, setAllUsersCount] = useState({ accounts: 0 });
 
   const getAllUsersCount = async () => {
-    const res = await fetch("http://localhost:8000/admin/all-users-count", {
+    const res = await fetch(`${URL}/admin/all-users-count`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -431,7 +436,7 @@ export const GcontextProvider = (props) => {
 
   const [pendingLoanApplications, setPendingLoanApplications] = useState([]);
   const getPendingLoanApplications = async () => {
-    const res = await fetch("http://localhost:8000/admin/pending-loans", {
+    const res = await fetch(`${URL}/admin/pending-loans`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -443,67 +448,55 @@ export const GcontextProvider = (props) => {
   };
 
   const handleApproveLoan = async (loan_id) => {
-    const res = await fetch(
-      `http://localhost:8000/admin/approve-loan/${loan_id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const res = await fetch(`${URL}/admin/approve-loan/${loan_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     const data = await res.json();
   };
 
   const handleRejectLoan = async (loan_id) => {
-    const res = await fetch(
-      `http://localhost:8000/admin/reject-loan/${loan_id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const res = await fetch(`${URL}/admin/reject-loan/${loan_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     const data = await res.json();
   };
 
   const [AllUnverifiedUsers, setAllUnverifiedUsers] = useState([]);
 
   const getAllUnverifiedUsers = async () => {
-    const res = await fetch(
-      "http://localhost:8000/admin/all-unverified-users",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const res = await fetch(`${URL}/admin/all-unverified-users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     const data = await res.json();
     console.log(data);
     setAllUnverifiedUsers(data);
   };
 
   const handleVerifyUser = async (user_id) => {
-    const res = await fetch(
-      `http://localhost:8000/admin/verify-user/${user_id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const res = await fetch(`${URL}/admin/verify-user/${user_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     const data = await res.json();
   };
 
   const handleVerifyAllUsers = async () => {
-    const res = await fetch("http://localhost:8000/admin/verify-all-users", {
+    const res = await fetch(`${URL}/admin/verify-all-users`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -514,22 +507,19 @@ export const GcontextProvider = (props) => {
   };
 
   const handleRejectVerification = async (user_id) => {
-    const res = await fetch(
-      `http://localhost:8000/admin/reject-verification/${user_id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const res = await fetch(`${URL}/admin/reject-verification/${user_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     const data = await res.json();
   };
   const [allUsers, setAllUsers] = useState([]);
 
   const getAllUsers = async () => {
-    const res = await fetch("http://localhost:8000/admin/all-users", {
+    const res = await fetch(`${URL}/admin/all-users`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -571,17 +561,14 @@ export const GcontextProvider = (props) => {
       alert("Please fill all fields");
     } else {
       console.log(updateFormData);
-      const res = await fetch(
-        `http://localhost:8000/admin/update-user-details/${user_id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(updateFormData),
-        }
-      );
+      const res = await fetch(`${URL}/admin/update-user-details/${user_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(updateFormData),
+      });
       const data = await res.json();
       if (data.message == "User updated successfully") {
         alert("User updated successfully");

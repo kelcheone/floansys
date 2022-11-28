@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useContext, useState } from "react";
 
 import { Gcontext } from "../../context/Gcontext";
@@ -100,12 +101,12 @@ const SignupForm = () => {
           Already have an account?
         </p>
 
-        <a
+        <Link
           className="inilne-block align-baseline text-sm text-black hover:text-[#113c42] underline"
           href="/auth/login"
         >
           Log In
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -108,6 +108,7 @@ const GuarantorModal = ({ show, setShow }) => {
                 <div className="absolute top-12 w-full h-20 overflow-y-scroll bg-black text-white rounded-lg shadow-lg">
                   {Loan_ids.map((loan_id) => (
                     <div
+                      key={loan_id}
                       className="w-full h-12 p-4"
                       onClick={() => handleSelectLoanId(loan_id)}
                     >

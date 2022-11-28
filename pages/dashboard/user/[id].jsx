@@ -4,7 +4,9 @@ import TableCard from "../../../components/Admin/TableCard";
 import { Gcontext } from "../../../context/Gcontext";
 import EditModal from "../../../components/Applications/EditModal";
 
-const id = () => {
+const URL = process.env.NEXT_PUBLIC_API_URL;
+
+const Id = () => {
   const [showModal, setShowModal] = useState(false);
   const timeout = () => setTimeout(() => console.log, 400);
   timeout();
@@ -13,9 +15,7 @@ const id = () => {
   const { id } = router.query;
   const [user, setUser] = useState({});
   const handleUserDetails = async () => {
-    const res = await fetch(
-      `http://localhost:8000/admin/all-user-details/${id}`
-    );
+    const res = await fetch(`${URL}/admin/all-user-details/${id}`);
     const data = await res.json();
     console.log(data);
     setUser(data);
@@ -50,4 +50,4 @@ const id = () => {
   );
 };
 
-export default id;
+export default Id;

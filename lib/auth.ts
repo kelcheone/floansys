@@ -17,13 +17,19 @@ export async function verifyAuth(req: NextRequest) {
   const token = req.cookies.get("token")?.value
 
   if (!token) throw new AuthError('Missing user token')
-
+  const v_token = await jwtVerify(
+    token,
+    new TextEncoder().encode(getJwtSecretKey())
+  )
+  console.log("v_token", v_token)
   try {
     const verified = await jwtVerify(
       token,
       new TextEncoder().encode(getJwtSecretKey())
     )
+    console.log('verified', verified)
     return verified.payload 
+
   } catch (err) {
     throw new AuthError('Your token has expired.')
   }

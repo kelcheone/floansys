@@ -1,13 +1,15 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+const URL = process.env.NEXT_PUBLIC_API_URL;
+
 const Loan = () => {
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState("");
 
   const handleLoan = async (id) => {
-    const res = await fetch(`http://localhost:8000/admin/loan-details/${id}`, {
+    const res = await fetch(`${URL}/admin/loan-details/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -28,16 +30,6 @@ const Loan = () => {
     [id],
     router.isReady
   );
-  /**
-   *
-amount
-due_date
-guarantors
-interest
-loan_id
-paid
-user_id
-   */
 
   return (
     <div>

@@ -62,7 +62,7 @@ const LogInForm = () => {
       </div>
       <div className="flex items-center justify-between mt-4">
         <p className="text-sm text-center text-gray-500">
-          Don't have an account?
+          {"Don't have an account?"}
         </p>
         <Link
           className="inilne-block align-baseline text-sm text-black hover:text-[#113c42] underline"
