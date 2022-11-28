@@ -306,7 +306,6 @@ export const GcontextProvider = (props) => {
   // });
 
   const handlePaybillSubmit = (e) => {
-
     const res = fetch(`${URL}/loans/pay`, {
       method: "PATCH",
       body: JSON.stringify({ amount: paidAmount, loan_id: selectedLoanId }),
@@ -571,6 +570,7 @@ export const GcontextProvider = (props) => {
   const handleViewLoan = (loan_id) => {
     router.push(`/dashboard/loan/${loan_id}`);
   };
+
   return (
     <Gcontext.Provider
       value={{
