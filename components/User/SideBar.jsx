@@ -14,6 +14,7 @@ const SideBar = () => {
     LoanDetails,
     showPaybillModal,
     setShowPaybillModal,
+    isApproved,
   } = useContext(Gcontext);
   return (
     <div className="flex flex-col mr-4 rounded-r-lg items-center justify-center w-full h-screen bg-sidebar">
@@ -59,11 +60,15 @@ const SideBar = () => {
         </div>
       </div>
       <div className="flex items-center justify-center w-full h-1/3">
-        <Button
-          // onclink reroute to payment page
-          onClick={() => setShowPaybillModal(!showPaybillModal)}
-          label="Pay Bill"
-        />
+        {isApproved ? (
+          <Button
+            // onclink reroute to payment page
+            onClick={() => setShowPaybillModal(!showPaybillModal)}
+            label="Pay Bill"
+          />
+        ) : (
+          <p className="text-sm text-white">Your loan is not approved yet</p>
+        )}
       </div>
 
       {showPaybillModal && <PaybillModal />}

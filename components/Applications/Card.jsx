@@ -13,13 +13,13 @@ const Card = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full h-full">
       <div className="flex items-center justify-between w-full p-4">
-        <h1 className="text-2xl font-bold">Users</h1>
+        <h1 className="text-2xl font-bold">Applications</h1>
       </div>
       <div className="flex flex-col items-center justify-center w-full h-full">
         <table className="w-full">
           <thead>
             <tr className="border-b-2 border-gray-300">
-              <th className="p-2">UID</th>
+              <th className="p-2">Loan Id</th>
               <th className="p-2">Name</th>
               <th className="p-2">Amount</th>
               <th className="p-2">Intrest Rate</th>
