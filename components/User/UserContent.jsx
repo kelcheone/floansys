@@ -14,7 +14,7 @@ let user_loan_history = {
 const UserContent = () => {
   const timeout = () => setTimeout(() => console.log, 400);
   timeout();
-  const { userLoans, getUserLoanDetails, LoanDetails } = useContext(Gcontext);
+  const { userLoans, getUserLoanDetails, LoanDetails, isApproved } = useContext(Gcontext);
   useEffect(() => {
     const data = getUserLoanDetails();
   }, []);
@@ -83,6 +83,7 @@ const UserContent = () => {
             </table>
           </div>
           <div className="flex items-center justify-center w-full h-2/3">
+            {isApproved ? (
             <button className="px-4 py-2 text-sm font-bold text-white bg-black rounded hover:bg-gray-700">
               <Link
                 href={{
@@ -92,6 +93,11 @@ const UserContent = () => {
                 Add New Loan
               </Link>
             </button>
+            ) : (
+              <p className="text-sm font-bold text-gray-700">
+                Your Account is not yet approved
+              </p>
+            )}
           </div>
         </div>
       </div>

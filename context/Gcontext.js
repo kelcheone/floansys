@@ -10,6 +10,8 @@ let base_url = `${URL}/auth`;
 const loanUrl = `${URL}/loans`;
 
 export const GcontextProvider = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [user, setUser] = useState(null);
   const router = useRouter();
   const [FormData, setFormData] = useState({
@@ -216,6 +218,7 @@ export const GcontextProvider = (props) => {
   const [userLoans, setUserLoans] = useState([]);
 
   const getUserLoans = async () => {
+    setIsLoading(true);
     const res = await fetch(`${URL}/loans/my-loans`, {
       method: "GET",
       headers: {
@@ -226,6 +229,7 @@ export const GcontextProvider = (props) => {
     const data = await res.json();
 
     setUserLoans(data);
+    setIsLoading(false);
   };
   ////////////////user Loan details/////////////////////
   const [LoanDetails, setLoanDetatils] = useState([]);
@@ -571,6 +575,22 @@ export const GcontextProvider = (props) => {
     router.push(`/dashboard/loan/${loan_id}`);
   };
 
+  const [isApproved, setIsApproved] = useState(false);
+
+  const handleIfApprovedUser = async () => {
+    // get user_id from the token
+    let user_id = parseJwt(localStorage.getItem("token")).user_id;
+    const res = await fetch(`${URL}/users/is-approved-user/${user_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    setIsApproved(data);
+  };
+
   return (
     <Gcontext.Provider
       value={{
@@ -650,6 +670,8 @@ export const GcontextProvider = (props) => {
         setUpdateFormData,
         handleUpdateUser,
         handleViewLoan,
+        isApproved,
+        handleIfApprovedUser,
       }}
     >
       {props.children}

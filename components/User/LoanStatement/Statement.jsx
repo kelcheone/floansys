@@ -46,8 +46,8 @@ const MyStatement = () => {
           <thead>
             <tr className="border-b-2 border-gray-300">
               <th className="p-2">Id</th>
-              <th className="p-2">Dates</th>
               <th className="p-2">Amount</th>
+              <th className="p-2">Dates</th>
               <th className="p-2">Type</th>
             </tr>
           </thead>

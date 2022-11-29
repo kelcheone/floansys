@@ -15,6 +15,7 @@ const User = () => {
     getUserLoanDetails,
     getTransactions,
     getPaidLoans,
+    handleIfApprovedUser,
   } = useContext(Gcontext);
   const [showSidebar, setShowSidebar] = useState(false);
   useEffect(() => {
@@ -24,6 +25,7 @@ const User = () => {
     getUserLoanDetails();
     getTransactions();
     getPaidLoans();
+    handleIfApprovedUser();
   }, []);
   return (
     <div className="flex md:flex-row md:flex-nowrap flex-col flex-nowrap h-screen bg-background w-screen">
